@@ -1,0 +1,115 @@
+
+.form {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	row-gap: 30px;
+	padding: 0 45px;
+	height: 100%;
+	text-align: center;
+	background-color: #fff;
+}
+.form h1 {
+    font-weight: bold;
+    font-size: 28px;
+}
+.inputs__block {
+	width: 100%;
+	padding-top: 22px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 44px;
+}
+
+.form__group{
+	position: relative;
+	width: 100%;
+}
+.form__input {
+	background-color: transparent;
+	color: #000;
+	border:1px solid rgba(0, 0, 0, 0.10);
+	font-size: 14px;
+    line-height: 1.45; /* 20.3px */
+    letter-spacing: 0.28px;
+	padding: 12px 15px;
+	/* margin: 8px 0; */
+	width: 100%;
+	transition: 0.3s all;
+}
+.form__input:focus{
+	outline: none;
+    border: 1px solid #0030E2;
+    color: #474747;
+}
+.label__for__input {
+    cursor: default;
+	position: absolute;
+	font-size: 14px;
+	left: 0;
+	top: -22px;
+	transition: 0.3s all;
+}
+.form__input:focus + .label__for__input{
+	color: #0030E2;
+}
+.pass__input {
+	padding-right: 30px;
+}
+.error__field .form__input {
+	border:1px solid red;
+}
+.error__field .label__for__input{
+	color:red !important;
+}
+.registration__btn {
+	cursor: pointer;
+	border-radius: 20px;
+	border: 1px solid #0030E2;
+	background-color: #0030E2;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: 0.2s all;
+	/* transition: transform 80ms ease-in; */
+}
+.registration__btn:hover{
+	background-color: #fff;
+	color: #0030E2;
+}
+.registration__btn:active {
+	transform: scale(0.95);
+}
+.error__message{
+	position: absolute;
+	left: 0;
+	bottom: -18px;
+	font-size: 12px;
+	color: red;
+}
+
+.pass__visible{
+	position: absolute;
+	top:50%;
+	right: 10px;
+	transform: translateY(-50%);
+}
+.passIcon {
+	cursor: pointer;
+	color:#474646;
+	transition: 0.3s all;
+}
+.passIcon:hover {
+	color:#000;
+}
+/* .pass__visible::before {
+	content: '\f15b';
+	font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+} */

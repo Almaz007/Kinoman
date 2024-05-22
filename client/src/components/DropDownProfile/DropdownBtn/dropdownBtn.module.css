@@ -1,0 +1,47 @@
+.profile-dropdown-btn {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 7px;
+
+	padding-right: 16px;
+	cursor: pointer;
+	border-radius: 50px;
+	border: 1px solid #000;
+	transition: 0.3s;
+}
+.profile-dropdown-btn:hover {
+	background-color: #0030e2;
+	border-color: #0030e2;
+}
+.provile-img {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.profile-text {
+	display: flex;
+	align-items: center;
+	column-gap: 5px;
+}
+
+.user-name {
+	transition: 0.3s;
+	max-width: 80px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.arrow-down {
+	transition: 0.3s;
+	transform: rotate(0deg);
+}
+.profile-dropdown-btn:hover .user-name,
+.profile-dropdown-btn:hover .arrow-down {
+	color: #fff;
+}
+.arrow-down.up {
+	transform: rotate(-180deg);
+}

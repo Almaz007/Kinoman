@@ -1,0 +1,12 @@
+.thankBlock {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+}
+
+.titleThank {
+	padding: 60px 10px 40px;
+	font-weight: 700;
+	font-size: 30px;
+}

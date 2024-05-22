@@ -1,0 +1,17 @@
+.seat-enter {
+	opacity: 0;
+	transform: translateX(-350px);
+}
+.seat-enter-active {
+	opacity: 1;
+	transform: translateX(0px);
+	transition: all 300ms ease-in;
+}
+.seat-exit {
+	opacity: 1;
+}
+.seat-exit-active {
+	opacity: 0;
+	transform: translateX(-350px);
+	transition: all 300ms ease-in;
+}

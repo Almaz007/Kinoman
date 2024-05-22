@@ -1,0 +1,90 @@
+.nav-li {
+	position: relative;
+	height: 50px;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	margin-top: 10px;
+}
+
+.tooltip {
+	display: none;
+	position: absolute;
+	top: -20px;
+	left: calc(100% + 18px);
+	z-index: 3;
+	background: #fff;
+	box-shadow: 0 5px 10px #0030e24d;
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 15px;
+	font-weight: 400;
+	opacity: 0;
+	white-space: nowrap;
+	pointer-events: none;
+	transition: 0s;
+}
+.nav-li:hover .tooltip {
+	opacity: 1;
+	pointer-events: auto;
+	transition: var(--tran-03);
+	top: 50%;
+	transform: translateY(-50%);
+}
+.close .tooltip {
+	display: block;
+}
+
+.nav-li .link {
+	list-style: none;
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	border-radius: 6px;
+	text-decoration: none;
+	transition: var(--tran-03);
+}
+.icon-block {
+	height: 100%;
+	min-width: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+}
+
+.text {
+	font-size: 17px;
+	font-weight: 500;
+	white-space: nowrap;
+	opacity: 1;
+}
+
+.text,
+.icon-block {
+	color: var(--text-color);
+	transition: var(--tran-03);
+}
+
+.close .text {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.nav-li .link:hover {
+	background-color: var(--primary-color);
+}
+.nav-li .link.active {
+	background-color: var(--primary-color);
+}
+
+.nav-li .link:hover .icon-block,
+.nav-li .link:hover .text {
+	color: var(--sidebar-color);
+}
+.nav-li .link.active .icon-block,
+.nav-li .link.active .text {
+	color: var(--sidebar-color);
+}

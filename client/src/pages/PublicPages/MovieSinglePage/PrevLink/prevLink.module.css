@@ -1,0 +1,22 @@
+.prev__link {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	cursor: pointer;
+	margin-bottom: 40px;
+}
+.prev__link__btn {
+	width: 24px;
+	height: 24px;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.4);
+	transition: 0.3s all;
+}
+.prev__link__text {
+	font-size: 16px;
+	transition: 0.3s all;
+}
+.prev__link:hover .prev__link__btn,
+.prev__link:hover .prev__link__text {
+	color: #0030e2;
+}

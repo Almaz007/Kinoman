@@ -1,0 +1,24 @@
+.dropdown-header {
+	padding: 20px 10px 30px;
+}
+.header-image {
+	width: 70px;
+	height: 70px;
+	overflow: hidden;
+	border-radius: 50%;
+	margin: 0 auto;
+	margin-bottom: 15px;
+}
+.header-text {
+	text-align: center;
+}
+.user-name {
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+.user-email {
+	font-size: 14px;
+	font-weight: 400;
+	color: #a9a9a9;
+}

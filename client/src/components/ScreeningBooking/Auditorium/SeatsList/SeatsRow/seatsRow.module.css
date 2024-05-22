@@ -1,0 +1,13 @@
+.seatsRow {
+	display: flex;
+	align-items: center;
+	column-gap: 7px;
+}
+.numRow {
+	color: #7b7b7b;
+	width: 20px;
+	text-align: center;
+
+	font-size: 14px;
+	line-height: 1.45; /* 15.126px */
+}

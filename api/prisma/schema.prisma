@@ -1,0 +1,154 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  userName        String?          @default("default")
+  email           String           @unique
+  password        String
+  phoneNumber     String
+  roleId          Int
+  refreshSessions RefreshSession[]
+  bookings        Booking[]
+  role            Role             @relation(fields: [roleId], references: [id])
+
+  @@map("Users")
+}
+
+model Role {
+  id       Int    @id @default(autoincrement())
+  roleName String
+  Users    User[]
+
+  @@map("Roles")
+}
+
+model UnauthorizedUser {
+  id          Int       @id @default(autoincrement())
+  email       String
+  phoneNumber String
+  bookings    Booking[]
+
+  @@map("UnauthorizedUsers")
+}
+
+model RefreshSession {
+  id           Int    @id @default(autoincrement())
+  userId       Int
+  refreshToken String @unique
+  fingerprint  String
+  user         User   @relation(fields: [userId], references: [id])
+
+  @@map("RefreshSessions")
+}
+
+model Auditorium {
+  id         Int         @id @default(autoincrement())
+  name       String
+  capacity   Int
+  seats      Seat[]
+  screenings Screening[]
+
+  @@map("Auditoriums")
+}
+
+model Seat {
+  id            Int            @id @default(autoincrement())
+  row           Int
+  number        Int
+  auditoriumId  Int
+  Auditorium    Auditorium     @relation(fields: [auditoriumId], references: [id])
+  reservedSeats ReservedSeat[]
+
+  @@map("Seats")
+}
+
+model ReservedSeat {
+  id          Int       @id @default(autoincrement())
+  seatId      Int
+  screeningId Int
+  bookingId   Int
+  seat        Seat      @relation(fields: [seatId], references: [id])
+  screening   Screening @relation(fields: [screeningId], references: [id])
+  booking     Booking   @relation(fields: [bookingId], references: [id])
+
+  @@unique([seatId, screeningId])
+  @@map("ReservedSeats")
+}
+
+model Screening {
+  id             Int            @id @default(autoincrement())
+  auditoriumId   Int
+  movieId        Int
+  quality        String
+  screeningStart DateTime
+  cost           Decimal
+  reservedSeats  ReservedSeat[]
+  bookings       Booking[]
+  auditorium     Auditorium     @relation(fields: [auditoriumId], references: [id])
+  movie          Movie          @relation(fields: [movieId], references: [id])
+
+  @@unique([auditoriumId, screeningStart])
+  @@index([movieId])
+  @@map("Screenings")
+}
+
+model Booking {
+  id                 Int               @id @default(autoincrement())
+  screeningId        Int
+  userId             Int?
+  unauthorizedUserId Int?
+  timePurchase       DateTime
+  amountSeat         Int
+  cost               Decimal
+  reservedSeats      ReservedSeat[]
+  screening          Screening         @relation(fields: [screeningId], references: [id])
+  user               User?             @relation(fields: [userId], references: [id])
+  unauthorizedUser   UnauthorizedUser? @relation(fields: [unauthorizedUserId], references: [id])
+
+  @@map("Bookings")
+}
+
+model Movie {
+  id          Int          @id @default(autoincrement())
+  title       String
+  duration    Int
+  releaseDate DateTime?
+  country     String?
+  directore   String?
+  rating      String?
+  description String?
+  posterLink  String?
+  genres      MovieGenre[]
+  screenings  Screening[]
+
+  @@map("Movies")
+}
+
+model MovieGenre {
+  movie   Movie @relation(fields: [moiveId], references: [id])
+  moiveId Int
+  genre   Genre @relation(fields: [genreId], references: [id])
+  genreId Int
+
+  @@id([moiveId, genreId])
+  @@map("MoviesGenres")
+}
+
+model Genre {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  movies      MovieGenre[]
+
+  @@map("Genres")
+}

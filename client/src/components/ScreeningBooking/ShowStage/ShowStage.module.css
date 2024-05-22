@@ -1,0 +1,40 @@
+.bookingStages {
+	display: flex;
+	column-gap: 10px;
+}
+
+.stage {
+	display: flex;
+	align-items: center;
+	column-gap: 5px;
+	padding: 10px;
+
+	max-width: 133px;
+	width: 100%;
+	border-radius: 4px;
+	background-color: #f0f0f2;
+	color: #88888b;
+	font-size: 13px;
+	line-height: normal;
+	letter-spacing: 0.26px;
+}
+.stageIcon .faIcon {
+	width: 16px;
+	color: #88888b;
+}
+
+.activeStage.stage {
+	background-color: #e0e7ff;
+	color: #0030e2;
+}
+.activeStage .stageIcon .faIcon {
+	color: #0030e2;
+}
+
+.prevStage.stage {
+	background-color: #e0ffe3;
+	color: #1bc200;
+}
+.prevStage .stageIcon .faIcon {
+	color: #1bc200;
+}

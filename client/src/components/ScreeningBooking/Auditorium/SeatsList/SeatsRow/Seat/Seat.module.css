@@ -1,0 +1,27 @@
+.seat {
+	width: 35px;
+	height: 35px;
+	background-color: #6cb9ff;
+	color: #6cb9ff;
+	font-size: 12px;
+	border-radius: 7px;
+	transition: 0.3s all;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.seat:hover {
+	cursor: pointer;
+	background-color: #ffd875;
+	color: #8b6910;
+}
+.selected.seat {
+	background-color: #ffd875;
+	color: #8b6910;
+}
+.reservedSeat.seat {
+	cursor: default;
+	background-color: #e6e6e6;
+	color: #2e2e2e;
+}

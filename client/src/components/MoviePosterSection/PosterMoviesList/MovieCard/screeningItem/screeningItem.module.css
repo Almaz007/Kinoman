@@ -1,0 +1,35 @@
+.screening {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 7px;
+    border: 1px solid #ABBDFF;
+    box-shadow: 0px 0px 2px 0px rgba(138, 138, 141, 0.15);
+
+    transition: 0.3s all;
+}
+.screening:hover {
+    background: #0030E2;
+    transform: translateY(-4px);
+}
+.screening:hover  .screening__time,
+.screening:hover .screening__price, 
+.screening:hover .screening__quality{
+    color: #fff;
+}
+
+.screening__time {
+    color: #0030E2;
+    line-height: normal;
+    letter-spacing: 0.32px;
+}
+
+.screening__price, .screening__quality {
+    color: #88888B;
+    font-size: 13px;
+    line-height: normal;
+    letter-spacing: 0.26px;
+}

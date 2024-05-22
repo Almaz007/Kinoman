@@ -1,0 +1,51 @@
+header {
+	position: relative;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+}
+.image {
+	min-width: 60px;
+	border-radius: 6px;
+}
+.image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.image img {
+	width: 60px;
+	border-radius: 6px;
+}
+
+.profile-text {
+	display: flex;
+	flex-direction: column;
+
+	font-size: 17px;
+	font-weight: 500;
+	white-space: nowrap;
+	opacity: 1;
+	color: var(--text-color);
+	transition: var(--tran-03);
+}
+.close .profile-text {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.logo-text .name {
+	margin-top: 2px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.logo-text .profession {
+	font-size: 16px;
+	margin-top: -2px;
+	display: block;
+}

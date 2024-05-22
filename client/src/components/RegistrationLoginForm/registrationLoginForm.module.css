@@ -1,0 +1,91 @@
+.registration__login__container {
+	background-color: #fff;
+	border-radius: 10px;
+	/* box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+			0 10px 10px rgba(0,0,0,0.22); */
+	position: relative;
+	overflow: hidden;
+	width: 900px;
+	max-width: 100%;
+	min-height: 640px;
+}
+.form__container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	transition: all 0.6s ease-in-out;
+}
+.login__container {
+	z-index: 2;
+}
+.registration__login__container.right__panel__active .login__container {
+	transform: translateX(100%);
+}
+.registration__container {
+	z-index: 1;
+}
+.registration__login__container.right__panel__active .registration__container {
+	transform: translateX(100%);
+	z-index: 5;
+	animation: show 0.6s;
+}
+@keyframes show {
+	0%,
+	49.99% {
+		opacity: 0;
+		z-index: 1;
+	}
+
+	50%,
+	100% {
+		opacity: 1;
+		z-index: 5;
+	}
+}
+
+.overlay__container {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+	overflow: hidden;
+	transition: transform 0.6s ease-in-out;
+	z-index: 100;
+}
+.registration__login__container.right__panel__active .overlay__container {
+	transform: translateX(-100%);
+}
+.overlay {
+	background: #032dc5;
+	background: -webkit-linear-gradient(to right, #2655ff, #032dc5);
+	background: linear-gradient(to right, #2655ff, #032dc5);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: #ffffff;
+	position: relative;
+	left: -100%;
+	height: 100%;
+	width: 200%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+.registration__login__container.right__panel__active .overlay {
+	transform: translateX(50%);
+}
+.overlay__left {
+	transform: translateX(-20%);
+}
+.overlay__right {
+	right: 0;
+	transform: translateX(0);
+}
+.registration__login__container.right__panel__active .overlay__left {
+	transform: translateX(0);
+}
+.registration__login__container.right__panel__active .overlay__right {
+	transform: translateX(20%);
+}

@@ -1,0 +1,15 @@
+.myBtn {
+    padding: 12px 20px;
+    color: #fff;
+    background-color: #0030E2;
+    border-radius: 5px;
+    border: 1px solid #0030E2;
+    transition: 0.3s all;
+}
+.myBtn:hover{
+    background-color: #fff;
+    color: #0030E2;
+}
+.open .myBtn{
+    margin-right: 45px;
+}

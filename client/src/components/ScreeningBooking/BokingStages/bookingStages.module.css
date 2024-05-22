@@ -1,0 +1,21 @@
+.blockStages {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 445px;
+	padding-right: 25px;
+
+	border-right: 1px solid #f0f0f2;
+}
+.controllBlock {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+.payControll {
+	display: flex;
+	align-items: center;
+	column-gap: 17px;
+	justify-content: space-between;
+}
