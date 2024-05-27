@@ -1,14 +1,14 @@
-import { Link, useMatch } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom';
 
-import styles from './custom-link.module.css'
-import { useContext } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ContextForAdminLayout } from '../../../../layout/adminLayout/AdminLayout'
+import styles from './custom-link.module.css';
+import { useContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ContextForAdminLayout } from '../../../../layout/adminLayout/AdminLayout';
 
 export default function CustomLink({ path, text, icon, handleClick }) {
-	const { sidebarVisible } = useContext(ContextForAdminLayout)
-	console.log(path)
-	const match = useMatch(path ?? 'none')
+	const { sidebarVisible } = useContext(ContextForAdminLayout);
+	console.log(path);
+	const match = useMatch(path ?? 'none');
 	return (
 		<li
 			className={
@@ -19,7 +19,7 @@ export default function CustomLink({ path, text, icon, handleClick }) {
 			onClick={handleClick}
 		>
 			<Link
-				to={path}
+				to={path ?? '#'}
 				className={
 					match ? [styles['link'], styles['active']].join(' ') : styles['link']
 				}
@@ -33,5 +33,5 @@ export default function CustomLink({ path, text, icon, handleClick }) {
 			</Link>
 			<span className={styles['tooltip']}>{text}</span>
 		</li>
-	)
+	);
 }

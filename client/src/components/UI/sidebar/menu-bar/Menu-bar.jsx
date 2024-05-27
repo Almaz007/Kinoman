@@ -1,14 +1,14 @@
-import styles from './menuBar.module.css'
-import { NavLinksData } from '../menu-links/nav-links-data'
-import MenuLinks from '../menu-links/menu-links'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
-import NavLink from '../menu-links/custom-link/custom-link'
-import { authState } from '../../../../store/store'
-import CustomLink from '../menu-links/custom-link/custom-link'
+import styles from './menuBar.module.css';
+import { NavLinksData } from '../menu-links/nav-links-data';
+import MenuLinks from '../menu-links/menu-links';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { authState } from '../../../../store/store';
+import CustomLink from '../menu-links/custom-link/custom-link';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuBar() {
-	const handleLogOut = authState(state => state.handleLogOut)
+	const handleLogOut = authState(state => state.handleLogOut);
+	const navigate = useNavigate();
 
 	return (
 		<div className={styles['menu-bar']}>
@@ -20,7 +20,7 @@ export default function MenuBar() {
 				<CustomLink
 					text={'Выйти'}
 					icon={faArrowRightFromBracket}
-					handleClick={handleLogOut}
+					handleClick={() => handleLogOut(navigate)}
 				/>
 				{/* <li className={styles['mode']}>
 					<div className={styles['sun-moon']}>
@@ -37,5 +37,5 @@ export default function MenuBar() {
 				</li> */}
 			</div>
 		</div>
-	)
+	);
 }

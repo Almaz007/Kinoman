@@ -1,44 +1,45 @@
-import styles from './loginForm.module.css'
+import styles from './loginForm.module.css';
 
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useContext } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { authState } from '../../../store/store'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { authState } from '../../../store/store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 // import { Context } from '../../../index'
-import { ContextForHeader } from '../../UI/header/Header'
+import { ContextForHeader } from '../../UI/header/Header';
 
 const LoginForm = () => {
-	const [passVisible, setPassVisible] = useState(false)
-	const [resulLogin, setLoginResult] = useState('')
+	const [passVisible, setPassVisible] = useState(false);
+	const [resulLogin, setLoginResult] = useState('');
 
-	const handleSignIn = authState(state => state.handleSignIn)
-	const isAuth = authState(state => state.isAuth)
+	const handleSignIn = authState(state => state.handleSignIn);
+	const isAuth = authState(state => state.isAuth);
 
 	// const {store} = useContext(Context);
-	const { setShowModal } = useContext(ContextForHeader)
-	const navigate = useNavigate()
+	const { setShowModal } = useContext(ContextForHeader);
+	const navigate = useNavigate();
 
 	interface ILoginForm {
-		email: string
-		password: string
+		email: string;
+		password: string;
 	}
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
+		reset
 	} = useForm<ILoginForm>({
-		mode: 'onChange',
-	})
+		mode: 'onChange'
+	});
 
 	const onSubmit: SubmitHandler<ILoginForm> = async data => {
 		await handleSignIn(
 			{ email: data.email, password: data.password },
-			setShowModal
-		)
-	}
+			setShowModal,
+			navigate
+		);
+	};
 
 	return (
 		<>
@@ -60,8 +61,8 @@ const LoginForm = () => {
 								pattern: {
 									value:
 										/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-									message: 'Не корректный email',
-								},
+									message: 'Не корректный email'
+								}
 							})}
 						/>
 						<label className={styles.label__for__input}>Email</label>
@@ -85,8 +86,8 @@ const LoginForm = () => {
 								pattern: {
 									value:
 										/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-									message: 'Пароль не соответсвует требованиям',
-								},
+									message: 'Пароль не соответсвует требованиям'
+								}
 							})}
 						/>
 						<label className={styles.label__for__input}>Password</label>
@@ -115,7 +116,7 @@ const LoginForm = () => {
 				</div>
 			</form>
 		</>
-	)
-}
+	);
+};
 
-export default LoginForm
+export default LoginForm;

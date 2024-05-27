@@ -1,11 +1,11 @@
-import { create } from 'zustand'
-import $api from '../http/index'
-import inMemoryJWT from '../Services/inMemoryJWT'
-import ScreeningService from '../Services/ScreeningService'
-import SeatService from '../Services/SeatService'
-import PaymentService from '../Services/PaymentService'
+import { create } from 'zustand';
+import $api from '../http/index';
+import inMemoryJWT from '../Services/inMemoryJWT';
+import ScreeningService from '../Services/ScreeningService';
+import SeatService from '../Services/SeatService';
+import PaymentService from '../Services/PaymentService';
 
-export const authState = create(set => ({
+export const authState = create((set, get) => ({
 	userData: {},
 	isAuth: false,
 	isLoading: true,
@@ -15,49 +15,52 @@ export const authState = create(set => ({
 
 	handleSignUp: async (data, setShowModal) => {
 		try {
-			let response = await $api.post('/auth/sign-up', data)
-			const { userDto, accesToken, accesTokenExpiration } = response.data
-			inMemoryJWT.setToken(accesToken, accesTokenExpiration)
-			set({ isAuth: true, userData: userDto })
-			setShowModal(false)
+			let response = await $api.post('/auth/sign-up', data);
+			const { userDto, accesToken, accesTokenExpiration } = response.data;
+			inMemoryJWT.setToken(accesToken, accesTokenExpiration);
+			set({ isAuth: true, userData: userDto });
+			setShowModal(false);
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 		}
 	},
-	handleSignIn: async (data, setShowModal) => {
+	handleSignIn: async (data, setShowModal, navigate) => {
 		try {
-			let response = await $api.post('/auth/sign-in', data)
-			const { userDto, accesToken, accesTokenExpiration } = response.data
-			inMemoryJWT.setToken(accesToken, accesTokenExpiration)
-			set({ isAuth: true, userData: userDto })
-			setShowModal(false)
+			let response = await $api.post('/auth/sign-in', data);
+			const { userDto, accesToken, accesTokenExpiration } = response.data;
+			inMemoryJWT.setToken(accesToken, accesTokenExpiration);
+			set({ isAuth: true, userData: userDto });
+			setShowModal(false);
+			if (userDto.roleId === 2) navigate('/');
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 		}
 	},
-	handleLogOut: async () => {
+	handleLogOut: async navigate => {
+		const { userData } = get();
 		try {
-			await $api.post('/auth/logout')
-			inMemoryJWT.deleteToken()
-			set({ isAuth: false, userData: [] })
+			await $api.post('/auth/logout');
+			inMemoryJWT.deleteToken();
+			set({ isAuth: false, userData: {} });
+			navigate('/');
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 		}
 	},
 	handleCheckAuth: async () => {
 		try {
-			const response = await $api.post('/auth/refresh')
-			const { userDto, accesToken, accesTokenExpiration } = response.data
+			const response = await $api.post('/auth/refresh');
+			const { userDto, accesToken, accesTokenExpiration } = response.data;
 
-			inMemoryJWT.setToken(accesToken, accesTokenExpiration)
-			set({ isAuth: true, userData: userDto })
+			inMemoryJWT.setToken(accesToken, accesTokenExpiration);
+			set({ isAuth: true, userData: userDto });
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 		} finally {
-			set({ isLoading: false })
+			set({ isLoading: false });
 		}
-	},
-}))
+	}
+}));
 
 export const PosterMoviesState = create(set => ({
 	posterMovies: [],
@@ -70,28 +73,28 @@ export const PosterMoviesState = create(set => ({
 			'2023-09-23',
 			'2023-09-24',
 			'2023-09-25',
-			'2023-09-26',
-		]
+			'2023-09-26'
+		];
 	},
 	selectedDate: '',
 	updateSelectedDate: date => {
-		return set({ selectedDate: date })
+		return set({ selectedDate: date });
 	},
 
 	fetchPosterMovies: async date => {
 		try {
-			set({ isLoading: true })
-			let response = await ScreeningService.getPosterMoviesByDate(date)
-			console.log(response)
-			set({ posterMovies: response.data })
+			set({ isLoading: true });
+			let response = await ScreeningService.getPosterMoviesByDate(date);
+			console.log(response);
+			set({ posterMovies: response.data });
 		} catch (err) {
-			set({ isError: err.message })
+			set({ isError: err.message });
 		} finally {
 			// setTimeout(() => set({ isLoading: false }), 1500)
-			set({ isLoading: false })
+			set({ isLoading: false });
 		}
-	},
-}))
+	}
+}));
 export const SingleMovieState = create(set => ({
 	screeningsByDate: [],
 	isLoadingScreenings: false,
@@ -103,34 +106,34 @@ export const SingleMovieState = create(set => ({
 
 	fetchDate: async movieId => {
 		try {
-			set({ isLoadingDate: true })
-			let response = await ScreeningService.getDatesForMovie(movieId)
-			set({ dateList: response.data })
+			set({ isLoadingDate: true });
+			let response = await ScreeningService.getDatesForMovie(movieId);
+			set({ dateList: response.data });
 		} catch (err) {
-			set({ isErrorDate: err.message })
+			set({ isErrorDate: err.message });
 		} finally {
-			set({ isLoadingDate: false })
+			set({ isLoadingDate: false });
 		}
 	},
 
 	fetchScreenings: async (date, movieId, abortController) => {
 		try {
-			set({ isLoadingScreenings: true })
+			set({ isLoadingScreenings: true });
 			let response = await ScreeningService.getScreeningsForDate(
 				date,
 				movieId,
 				abortController
-			)
-			set({ screeningsByDate: response.data })
+			);
+			set({ screeningsByDate: response.data });
 		} catch (err) {
 			if (err.name !== 'CanceledError') {
-				set({ isErrorScreenings: err.message })
+				set({ isErrorScreenings: err.message });
 			}
 		} finally {
-			set({ isLoadingScreenings: false })
+			set({ isLoadingScreenings: false });
 		}
-	},
-}))
+	}
+}));
 export const screeningBookingState = create((set, get) => ({
 	isLoading: false,
 	isError: '',
@@ -142,26 +145,26 @@ export const screeningBookingState = create((set, get) => ({
 	selectedSeats: [],
 	chequeSendInfo: {
 		email: '',
-		phoneNumber: '',
+		phoneNumber: ''
 	},
 	updateСhequeSendInfo: (email, phoneNumber) => {
-		set({ chequeSendInfo: { email, phoneNumber } })
+		set({ chequeSendInfo: { email, phoneNumber } });
 	},
 	getСhequeSendInfo: () => {
-		const { chequeSendInfo } = get()
-		const { email, phoneNumber } = chequeSendInfo
-		return { defaultEmail: email, defaultPhoneNumber: phoneNumber }
+		const { chequeSendInfo } = get();
+		const { email, phoneNumber } = chequeSendInfo;
+		return { defaultEmail: email, defaultPhoneNumber: phoneNumber };
 	},
 
 	stage: 0,
 
 	decStage: () => {
-		const { stage } = get()
-		set({ stage: stage - 1 })
+		const { stage } = get();
+		set({ stage: stage - 1 });
 	},
 	incStage: () => {
-		const { stage } = get()
-		set({ stage: stage + 1 })
+		const { stage } = get();
+		set({ stage: stage + 1 });
 	},
 
 	resetState: () => {
@@ -175,19 +178,19 @@ export const screeningBookingState = create((set, get) => ({
 			stage: 0,
 			checkSendInfo: {
 				email: '',
-				phoneNumber: '',
-			},
-		})
+				phoneNumber: ''
+			}
+		});
 	},
 	createScreeningBooking: (movie, screeningData) => {
-		const { screeningBooking } = get()
-		if (screeningBooking.id === screeningData.id) return
+		const { screeningBooking } = get();
+		if (screeningBooking.id === screeningData.id) return;
 
-		const { resetState } = get()
-		resetState()
+		const { resetState } = get();
+		resetState();
 
-		const { title, duration, rating } = movie
-		const { id, cost, auditoriumId, quality } = screeningData
+		const { title, duration, rating } = movie;
+		const { id, cost, auditoriumId, quality } = screeningData;
 
 		const newData = {
 			id,
@@ -196,50 +199,50 @@ export const screeningBookingState = create((set, get) => ({
 			rating,
 			cost,
 			auditoriumId,
-			quality,
-		}
+			quality
+		};
 
-		set({ screeningBooking: newData })
+		set({ screeningBooking: newData });
 	},
 	fetchSeatsInfo: async () => {
-		const { screeningBooking } = get()
-		const { id: screeningId, auditoriumId } = screeningBooking
+		const { screeningBooking } = get();
+		const { id: screeningId, auditoriumId } = screeningBooking;
 
 		try {
-			set({ isLoading: true })
+			set({ isLoading: true });
 
-			let response = await SeatService.getSeatsInfo(screeningId, auditoriumId)
+			let response = await SeatService.getSeatsInfo(screeningId, auditoriumId);
 
-			set({ seatsInfo: response.data })
+			set({ seatsInfo: response.data });
 		} catch (err) {
-			set({ isError: err.message })
+			set({ isError: err.message });
 		} finally {
-			set({ isLoading: false })
+			set({ isLoading: false });
 		}
 	},
 	addAndDeleteSelectedSeats: seatData => {
-		const { selectedSeats } = get()
+		const { selectedSeats } = get();
 		if (selectedSeats.find(seat => seat.id === seatData.id)) {
 			set({
-				selectedSeats: selectedSeats.filter(seat => seat.id !== seatData.id),
-			})
+				selectedSeats: selectedSeats.filter(seat => seat.id !== seatData.id)
+			});
 		} else {
-			set({ selectedSeats: [...selectedSeats, seatData] })
+			set({ selectedSeats: [...selectedSeats, seatData] });
 		}
 	},
 	payment: async (userId, isAuth) => {
-		const { screeningBooking, selectedSeats, checkSendInfo } = get()
-		set({ isLoading: true })
+		const { screeningBooking, selectedSeats, checkSendInfo } = get();
+		set({ isLoading: true });
 		try {
-			let dateToday = new Date()
+			let dateToday = new Date();
 
 			let bookingObj = {
 				screeningId: screeningBooking.id,
 				userId,
 				timePurchase: dateToday,
 				amountSeat: selectedSeats.length,
-				cost: screeningBooking.cost,
-			}
+				cost: screeningBooking.cost
+			};
 
 			const response = await PaymentService.makePayment(
 				isAuth,
@@ -247,13 +250,13 @@ export const screeningBookingState = create((set, get) => ({
 				checkSendInfo,
 				selectedSeats,
 				screeningBooking
-			)
+			);
 
-			const { paymentUrl } = response.data
+			const { paymentUrl } = response.data;
 
-			return paymentUrl
+			return paymentUrl;
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 		}
-	},
-}))
+	}
+}));
