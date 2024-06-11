@@ -1,12 +1,12 @@
-import { useState, createContext } from 'react'
-import { Outlet } from 'react-router-dom'
-import Sidebar from '../../UI/sidebar/Sidebar'
-import styles from './adminLayout.module.css'
+import { useState, createContext } from 'react';
+import { Outlet } from 'react-router-dom';
+import Sidebar from '../../UI/sidebar/Sidebar';
+import styles from './adminLayout.module.css';
 
-export const ContextForAdminLayout = createContext()
+export const ContextForAdminLayout = createContext();
 
 export default function AdminLayout() {
-	const [sidebarVisible, setSidebarVisible] = useState(false)
+	const [sidebarVisible, setSidebarVisible] = useState(false);
 
 	return (
 		<ContextForAdminLayout.Provider
@@ -17,7 +17,7 @@ export default function AdminLayout() {
 					sidebarVisible={sidebarVisible}
 					setSidebarVisible={setSidebarVisible}
 				/>
-				<div className={styles['page']}>
+				<section className={styles['page']}>
 					<Outlet />
 					<div
 						onClick={() => setSidebarVisible(false)}
@@ -27,8 +27,8 @@ export default function AdminLayout() {
 								: [(styles['sidebar-overlay'], styles['close'])].join(' ')
 						}
 					></div>
-				</div>
+				</section>
 			</div>
 		</ContextForAdminLayout.Provider>
-	)
+	);
 }

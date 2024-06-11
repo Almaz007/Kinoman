@@ -2,25 +2,32 @@ import {
 	faPenToSquare,
 	faInfo,
 	faUser,
-} from '@fortawesome/free-solid-svg-icons'
+	faShop
+} from '@fortawesome/free-solid-svg-icons';
 
 export const authUserLinks = [
 	{
 		id: 1,
-		path: '/userProfile',
+		path: 'userProfile',
 		text: 'Профиль',
-		icon: faUser,
+		icon: faUser
 	},
 	{
 		id: 2,
-		path: '/editProfile',
+		path: 'editProfile',
 		text: 'Редактирование',
-		icon: faPenToSquare,
+		icon: faPenToSquare
 	},
 	{
 		id: 3,
-		path: '/help',
-		text: 'Помощь',
-		icon: faInfo,
+		path: 'orders',
+		text: 'Заказы',
+		icon: faShop
 	},
-]
+	{
+		id: 4,
+		path: 'help',
+		text: 'Помощь',
+		icon: faInfo
+	}
+];

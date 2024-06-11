@@ -1,10 +1,10 @@
-import { useState, createContext } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { useState, createContext } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import Header from './header/Header'
-import MenuBar from './menu-bar/Menu-bar'
-import styles from './sidebar.module.css'
+import Header from './header/Header';
+import MenuBar from './menu-bar/Menu-bar';
+import styles from './sidebar.module.css';
 
 export default function Sidebar({ sidebarVisible, setSidebarVisible }) {
 	return (
@@ -26,5 +26,5 @@ export default function Sidebar({ sidebarVisible, setSidebarVisible }) {
 				<MenuBar />
 			</nav>
 		</div>
-	)
+	);
 }

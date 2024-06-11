@@ -122,12 +122,13 @@ model Movie {
   id          Int          @id @default(autoincrement())
   title       String
   duration    Int
-  releaseDate DateTime?
-  country     String?
-  directore   String?
-  rating      String?
-  description String?
-  posterLink  String?
+  releaseDate DateTime
+  country     String
+  directore   String
+  rating      Float
+  ageLimit    String
+  description String
+  posterLink  String
   genres      MovieGenre[]
   screenings  Screening[]
 
@@ -151,4 +152,11 @@ model Genre {
   movies      MovieGenre[]
 
   @@map("Genres")
+}
+
+model AgeLimit {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map("AgeLimits")
 }

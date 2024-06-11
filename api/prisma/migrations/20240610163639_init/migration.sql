@@ -96,12 +96,13 @@ CREATE TABLE "Movies" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "duration" INTEGER NOT NULL,
-    "releaseDate" TIMESTAMP(3),
-    "country" TEXT,
-    "directore" TEXT,
-    "rating" TEXT,
-    "description" TEXT,
-    "posterLink" TEXT,
+    "releaseDate" TIMESTAMP(3) NOT NULL,
+    "country" TEXT NOT NULL,
+    "directore" TEXT NOT NULL,
+    "rating" DOUBLE PRECISION NOT NULL,
+    "ageLimit" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "posterLink" TEXT NOT NULL,
 
     CONSTRAINT "Movies_pkey" PRIMARY KEY ("id")
 );

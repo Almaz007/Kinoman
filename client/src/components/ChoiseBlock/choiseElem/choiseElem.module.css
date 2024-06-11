@@ -1,0 +1,40 @@
+.choise {
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+    padding: 10px 15px;
+    
+    cursor: pointer;
+    font-size: 14px;
+    line-height: normal;
+    letter-spacing: 0.14px;
+    
+    max-width: 130px;
+    border-radius: 5px;
+    background:#F0F0F2;
+    transition: 0.3s all;
+}
+.choise:hover {
+    background:#E0E7FF;
+    color: #0030E2;
+}
+.choise:hover .svg__elem {
+    fill: #0030E2;
+}
+.choise:hover .svg__elem__stroke {
+    stroke: #0030E2;
+}
+.active.choise {
+    background:#E0E7FF;
+    color: #0030E2;
+}
+.active.choise .svg__elem {
+    fill: #0030E2;
+}
+.active.choise .svg__elem__stroke{
+    stroke: #0030E2;
+}
+.choise__icon c{
+    width: 22px;
+    height: 22px;
+}

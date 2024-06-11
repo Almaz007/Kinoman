@@ -3,38 +3,38 @@ import {
 	faCalendar,
 	faTicket,
 	faNewspaper,
-	faUser,
-} from '@fortawesome/free-solid-svg-icons'
+	faUser
+} from '@fortawesome/free-solid-svg-icons';
 
 export const AdminLinks = [
 	{
 		id: 1,
 		path: '/',
 		text: 'Кабинет',
-		icon: faUser,
+		icon: faUser
 	},
 	{
 		id: 2,
 		path: '/Movies',
 		text: 'Фильмы',
-		icon: faVideo,
+		icon: faVideo
 	},
 	{
 		id: 3,
 		path: '/Screenings',
 		text: 'Сеансы',
-		icon: faCalendar,
+		icon: faCalendar
 	},
 	{
 		id: 4,
 		path: '/Bookings',
 		text: 'Бронирования',
-		icon: faTicket,
+		icon: faTicket
 	},
 	{
 		id: 5,
-		path: '/News',
+		path: '/AdminNews',
 		text: 'Новости',
-		icon: faNewspaper,
-	},
-]
+		icon: faNewspaper
+	}
+];

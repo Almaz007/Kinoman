@@ -1,0 +1,40 @@
+.button {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	background-color: var(--primary-color);
+	border-radius: 50%;
+	text-align: center;
+	cursor: pointer;
+	transition: var(--tran-03);
+}
+.button:hover {
+	background-color: var(--primary-hover-color);
+	transform: translateY(-2px);
+}
+.line {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+
+	width: 24px;
+	height: 5px;
+	background-color: #fff;
+
+	transition: var(--tran-03);
+}
+.plus {
+	transform: translate(-50%, -50%) rotate(0deg);
+	opacity: 1;
+}
+.active .plus {
+	transform: translate(-50%, -50%) rotate(90deg);
+	opacity: 0;
+}
+.minus {
+	transform: translate(-50%, -50%) rotate(-90deg);
+}
+.active .minus {
+	transform: translate(-50%, -50%) rotate(0deg);
+}

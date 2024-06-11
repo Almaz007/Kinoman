@@ -1,17 +1,10 @@
-:root {
-	--admin-section-color: #e4e9f7;
-}
-
 .admin-section {
 	height: 100svh;
 	padding-left: 88px;
-	background-color: var(--admin-section-color);
 }
 .page {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	/* height: 100%; */
+	padding: 20px 32px;
 }
 .sidebar-overlay {
 	position: fixed;

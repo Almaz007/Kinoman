@@ -1,47 +1,47 @@
-import styles from './registrationForm.module.css'
-import { useState, useContext } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { authState } from '../../../store/store'
-import { ContextForHeader } from '../../UI/header/Header'
+import styles from './registrationForm.module.css';
+import { useState, useContext } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { authState } from '../../../store/store';
+import { ContextForHeader } from '../../UI/header/Header';
 
 const RegistrationForm = ({}) => {
-	const [passVisible1, setPassVisible1] = useState(false)
-	const [passVisible2, setPassVisible2] = useState(false)
+	const [passVisible1, setPassVisible1] = useState(false);
+	const [passVisible2, setPassVisible2] = useState(false);
 
-	const handleSignUp = authState(state => state.handleSignUp)
+	const handleSignUp = authState(state => state.handleSignUp);
 
-	const { setShowModal } = useContext(ContextForHeader)
+	const { setShowModal } = useContext(ContextForHeader);
 
 	interface IRegistrationForm {
-		userName: string
-		phoneNumber: string
-		email: string
-		password: string
-		confirmPass: string
+		userName: string;
+		phoneNumber: string;
+		email: string;
+		password: string;
+		confirmPass: string;
 	}
 	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors },
-		reset,
+		reset
 	} = useForm<IRegistrationForm>({
-		mode: 'onChange',
-	})
+		mode: 'onChange'
+	});
 	const onSubmit: SubmitHandler<IRegistrationForm> = async data => {
-		console.log(data)
+		console.log(data);
 		await handleSignUp(
 			{
 				userName: data.userName,
 				phoneNumber: data.phoneNumber,
 				email: data.email,
-				password: data.password,
+				password: data.password
 			},
 			setShowModal
-		)
-	}
+		);
+	};
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -61,12 +61,12 @@ const RegistrationForm = ({}) => {
 							required: 'Это обязательное поле',
 							minLength: {
 								value: 3,
-								message: 'Должно содержать 3 или более символов',
+								message: 'Должно содержать 3 или более символов'
 							},
 							maxLength: {
 								value: 10,
-								message: 'Должно содержать 10 или менее символов',
-							},
+								message: 'Должно содержать 10 или менее символов'
+							}
 						})}
 					/>
 					<label className={styles.label__for__input}>Имя</label>
@@ -89,8 +89,8 @@ const RegistrationForm = ({}) => {
 							required: 'Это обязательное поле',
 							pattern: {
 								value: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/,
-								message: 'Не корректный номер телефона',
-							},
+								message: 'Не корректный номер телефона'
+							}
 						})}
 					/>
 					<label className={styles.label__for__input}>Номер телефона</label>
@@ -116,8 +116,8 @@ const RegistrationForm = ({}) => {
 							pattern: {
 								value:
 									/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-								message: 'Не корректный email',
-							},
+								message: 'Не корректный email'
+							}
 						})}
 					/>
 					<label className={styles.label__for__input}>email</label>
@@ -141,8 +141,8 @@ const RegistrationForm = ({}) => {
 							pattern: {
 								value:
 									/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-								message: 'Пароль не соответсвует требованиям',
-							},
+								message: 'Пароль не соответсвует требованиям'
+							}
 						})}
 					/>
 					<label className={styles.label__for__input}>Пароль</label>
@@ -173,13 +173,13 @@ const RegistrationForm = ({}) => {
 							pattern: {
 								value:
 									/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-								message: 'Пароль не соответсвует требованиям',
+								message: 'Пароль не соответсвует требованиям'
 							},
 							validate: (val: string) => {
 								if (watch('password') != val) {
-									return 'Пароли не совпадают'
+									return 'Пароли не совпадают';
 								}
-							},
+							}
 						})}
 					/>
 					<label className={styles.label__for__input}>
@@ -201,7 +201,7 @@ const RegistrationForm = ({}) => {
 			</div>
 			<button className={styles.registration__btn}>Регистрация</button>
 		</form>
-	)
-}
+	);
+};
 
-export default RegistrationForm
+export default RegistrationForm;

@@ -4,6 +4,8 @@ import inMemoryJWT from '../Services/inMemoryJWT';
 import ScreeningService from '../Services/ScreeningService';
 import SeatService from '../Services/SeatService';
 import PaymentService from '../Services/PaymentService';
+import MovieService from '../Services/MovieService';
+import config from '../config';
 
 export const authState = create((set, get) => ({
 	userData: {},
@@ -69,11 +71,11 @@ export const PosterMoviesState = create(set => ({
 
 	generateDateList: () => {
 		return [
-			'2023-09-22',
-			'2023-09-23',
-			'2023-09-24',
-			'2023-09-25',
-			'2023-09-26'
+			'2024-05-22',
+			'2024-05-23',
+			'2024-05-24',
+			'2024-05-25',
+			'2024-05-26'
 		];
 	},
 	selectedDate: '',
@@ -108,6 +110,7 @@ export const SingleMovieState = create(set => ({
 		try {
 			set({ isLoadingDate: true });
 			let response = await ScreeningService.getDatesForMovie(movieId);
+			console.log(response);
 			set({ dateList: response.data });
 		} catch (err) {
 			set({ isErrorDate: err.message });
@@ -257,6 +260,48 @@ export const screeningBookingState = create((set, get) => ({
 			return paymentUrl;
 		} catch (err) {
 			console.log(err);
+		}
+	}
+}));
+
+export const moviesState = create((set, get) => ({
+	isFormLoading: false,
+	isFormError: '',
+	ageLimits: [],
+	genres: [],
+
+	fetchFormData: async () => {
+		try {
+			set({ isFormLoading: true });
+			const resp = await MovieService.getFormData();
+			const { ageLimits, genres } = resp.data;
+
+			console.log(ageLimits);
+			console.log(genres);
+			set({ ageLimits, genres });
+		} catch (err) {
+			set({ isFormError: err.message });
+		} finally {
+			set({ isFormLoading: false });
+		}
+	},
+
+	createMovie: async (data, navigate) => {
+		try {
+			const { imageFile: file, ...restData } = data;
+
+			const formData = new FormData();
+			formData.append('image', file);
+			const resp = await $api.post('/files/upload/movieImg', formData);
+			const posterLink = config.API_URL + resp.data.url;
+
+			const movieData = { ...restData, posterLink };
+
+			const resp2 = await $api.post('/movies/createMovie', { movieData });
+
+			navigate('/Movies');
+		} catch (err) {
+			set({ isAddError: err.message });
 		}
 	}
 }));

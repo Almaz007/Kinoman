@@ -1,17 +1,17 @@
-import SeatsService from '../services/SeatsService.js'
+import SeatsService from '../services/SeatsService.js';
 
-export default class SeatssController {
+export default class SeatsController {
 	static async getSeatsInfo(req, res, next) {
-		const { screeningId, auditoriumId } = req.query
+		const { screeningId, auditoriumId } = req.query;
 		try {
 			const seatsInfo = await SeatsService.getSeatsInfo(
 				+screeningId,
 				+auditoriumId
-			)
+			);
 
-			return res.status(200).json(seatsInfo)
+			return res.status(200).json(seatsInfo);
 		} catch (err) {
-			next(err)
+			next(err);
 		}
 	}
 }

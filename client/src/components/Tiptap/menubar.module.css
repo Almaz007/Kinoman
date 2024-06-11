@@ -1,0 +1,28 @@
+.menubar {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5px;
+	padding: 10px;
+	border: 1px solid #0d0d0d;
+	border-radius: 5px;
+}
+.text__edit {
+	display: flex;
+	column-gap: 5px;
+	align-items: center;
+}
+.btn {
+	font-size: 18px;
+	padding: 5px;
+	text-align: center;
+}
+
+.is_active.btn {
+	color: var(--primary-color);
+}
+.btn:hover {
+	color: var(--primary-color);
+}
+.btn svg {
+	display: block;
+}

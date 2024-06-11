@@ -1,0 +1,31 @@
+.movie__fullInfo {
+    display: flex;
+    justify-content: space-between;
+}
+.movie__desc {
+    max-width: 470px;
+    line-height: 1.50; /* 24px */
+    letter-spacing: 0.16px;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+.info__block{
+    display: flex;
+    flex-direction: column;
+    row-gap: 3px;
+}
+.info__title {
+    color: #88888B;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.50; /* 19.5px */
+    letter-spacing: 0.13px;
+}
+.info__text {
+    color: #222;
+    line-height: 1.5; /* 24px */
+    letter-spacing: 0.16px;
+}

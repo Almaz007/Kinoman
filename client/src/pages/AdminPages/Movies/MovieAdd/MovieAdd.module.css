@@ -1,0 +1,39 @@
+.title {
+	margin-bottom: 40px;
+}
+.form {
+	/* display: flex;
+	align-items: center;
+	gap: 30px;
+	flex-wrap: wrap; */
+}
+.image__block {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 30px;
+	width: max-content;
+	max-width: 400px;
+	min-height: 250px;
+}
+
+.entering__data {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-bottom: 20px;
+}
+.img__back {
+	height: 200px;
+	width: 300px;
+	background-color: #b6b5b5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+}
+
+.prev__link {
+	margin-bottom: 30px;
+}

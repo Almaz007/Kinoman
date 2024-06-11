@@ -4,11 +4,16 @@ import ThankPage from '../pages/PublicPages/ThankPage/ThankPage';
 import Movies from '../pages/AdminPages/Movies/Movies';
 import Screenings from '../pages/AdminPages/Screenings/Screenings';
 import Bookings from '../pages/AdminPages/Bookings/Bookings';
-import News from '../pages/AdminPages/News/News';
-import TestPage from '../pages/authUserPages/TestPage';
+import AdminNews from '../pages/AdminPages/AdminNews/AdminNews';
 import MovieSinglePage from '../pages/PublicPages/MovieSinglePage/MovieSinglePage';
 import Cinema from '../pages/PublicPages/Cinema/Cinema';
 import Contacts from '../pages/PublicPages/Contacts/Contacts';
+import MovieAdd from '../pages/AdminPages/Movies/MovieAdd/MovieAdd';
+import UserProfile from '../pages/authUserPages/UserProfile/UserProfile';
+import EditProfile from '../pages/authUserPages/EditProfile/EditProfile';
+import Help from '../pages/authUserPages/Help/Help';
+import News from '../pages/PublicPages/News/News';
+import Orders from '../pages/authUserPages/Orders/Orders';
 
 export const publicRoutes = [
 	{
@@ -21,7 +26,7 @@ export const publicRoutes = [
 	},
 	{
 		path: 'News',
-		element: <Poster />
+		element: <News />
 	},
 	{
 		path: 'NewsPadge',
@@ -51,6 +56,10 @@ export const adminRoutes = [
 		element: <Movies />
 	},
 	{
+		path: 'MovieAdd',
+		element: <MovieAdd />
+	},
+	{
 		path: 'Screenings',
 		element: <Screenings />
 	},
@@ -59,22 +68,26 @@ export const adminRoutes = [
 		element: <Bookings />
 	},
 	{
-		path: 'News',
-		element: <News />
+		path: 'AdminNews',
+		element: <AdminNews />
 	}
 ];
 
 export const authUserRoutes = [
 	{
-		path: '/userProfile',
-		element: <TestPage />
+		path: 'userProfile',
+		element: <UserProfile />
 	},
 	{
-		path: '/editProfile',
-		element: <TestPage />
+		path: 'editProfile',
+		element: <EditProfile />
 	},
 	{
-		path: '/help',
-		element: <TestPage />
+		path: 'orders',
+		element: <Orders />
+	},
+	{
+		path: 'help',
+		element: <Help />
 	}
 ];

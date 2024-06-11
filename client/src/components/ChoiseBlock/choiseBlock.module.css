@@ -1,0 +1,5 @@
+.choise__block {
+	display: flex;
+	column-gap: 15px;
+	margin-bottom: 35px;
+}

@@ -117,3 +117,6 @@ label {
 legend {
 	display: block;
 }
+::-webkit-scrollbar {
+	width: 0 !important;
+}

@@ -1,0 +1,22 @@
+.add__records {
+	padding: 20px 0px;
+}
+
+.add__block {
+	background-color: #818181;
+	overflow: hidden;
+	margin-top: 10px;
+	transition: var(--tran-03);
+}
+
+.entering,
+.entered {
+	opacity: 1;
+	height: 300px;
+}
+
+.exiting,
+.exited {
+	opacity: 0;
+	height: 0px;
+}

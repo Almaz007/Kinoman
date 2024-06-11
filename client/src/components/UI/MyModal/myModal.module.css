@@ -13,7 +13,7 @@
 	z-index: 999;
 }
 
-.modalWrapper {
+.modal__wrapper {
 	position: absolute;
 	z-index: 1000;
 	left: 0;
@@ -27,7 +27,7 @@
 	align-items: center;
 }
 
-.modalContent {
+.modal__content {
 	cursor: default;
 	position: relative;
 	margin: 20px;
@@ -37,21 +37,21 @@
 	transition: opacity 0.3s, transform 0.3s;
 }
 
-.modal--entering,
-.modal--entered {
+.modal__entering,
+.modal__entered {
 	opacity: 1;
 }
-.modal--entering .modalContent,
-.modal--entered .modalContent {
+.modal__entering .modal__content,
+.modal__entered .modal__content {
 	transform: translateY(0);
 }
 
-.modal--exiting,
-.modal--exited {
+.modal__exiting,
+.modal__exited {
 	opacity: 0;
 }
-.modal--exiting .modalContent,
-.modal--exited .modalContent {
+.modal__exiting .modal__content,
+.modal__exited .modal__content {
 	transform: translateY(-50px);
 }
 
@@ -66,7 +66,7 @@
 	right: 20px;
 	transition: 0.3s all;
 }
-.closeBtn {
+.close__btn {
 	position: relative;
 	height: 100%;
 }
@@ -81,7 +81,7 @@
 	transform: translateY(-50%);
 	transition: 0.3s all;
 }
-.closeBtn:hover > span {
+.close__btn:hover > span {
 	background-color: #bebebe;
 	transform: translateY(-2px);
 }

@@ -7,7 +7,6 @@ import { ContextForAdminLayout } from '../../../../layout/adminLayout/AdminLayou
 
 export default function CustomLink({ path, text, icon, handleClick }) {
 	const { sidebarVisible } = useContext(ContextForAdminLayout);
-	console.log(path);
 	const match = useMatch(path ?? 'none');
 	return (
 		<li

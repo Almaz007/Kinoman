@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export default class ScreeningService {
 	static async getPosterMoviesByDate(date) {
@@ -6,20 +6,21 @@ export default class ScreeningService {
 			`http://localhost:5000/api/screenings/getPosterMoviesByDate`,
 			{
 				params: {
-					date: date,
-				},
+					date: date
+				}
 			}
-		)
+		);
 	}
 	static async getDatesForMovie(movieId) {
+		console.log(movieId);
 		return await axios.get(
 			`http://localhost:5000/api/screenings/getDatesForMovie`,
 			{
 				params: {
-					movieId,
-				},
+					movieId
+				}
 			}
-		)
+		);
 	}
 	static async getScreeningsForDate(date, movieId, abortController) {
 		return await axios.get(
@@ -27,10 +28,10 @@ export default class ScreeningService {
 			{
 				params: {
 					date,
-					movieId,
+					movieId
 				},
-				signal: abortController.signal,
+				signal: abortController.signal
 			}
-		)
+		);
 	}
 }
