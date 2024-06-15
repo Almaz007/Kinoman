@@ -1,0 +1,82 @@
+.form__title {
+	margin-bottom: 30px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.profile__from {
+	width: fit-content;
+	margin: 0 auto;
+	padding: 30px 20px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.08),
+		0 8px 10px rgba(0, 0, 0, 0.1);
+}
+.form__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 50px;
+	margin-bottom: 30px;
+}
+
+.fields {
+	display: flex;
+	align-items: start;
+	flex-wrap: wrap;
+	max-width: 620px;
+	gap: 20px;
+	height: max-content;
+}
+.image__section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 170px;
+}
+.delete__img {
+	position: absolute;
+	cursor: pointer;
+	top: -5px;
+	right: -5px;
+	font-size: 25px;
+	transition: var(--tran-03);
+}
+.delete__img:hover {
+	color: red;
+}
+.image__block {
+	width: 170px;
+	height: 170px;
+	overflow: hidden;
+	background-color: #d6d6d6;
+	border-radius: 50%;
+	margin-bottom: 30px;
+}
+.image {
+	width: 100%;
+	height: 100%;
+}
+
+.pass__title {
+	margin-bottom: 20px;
+	font-size: 18px;
+	font-weight: 500;
+}
+.password__fields {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+.form__bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+}
+.error__message {
+	padding: 10px;
+	color: red;
+}
+.btn__save {
+	margin-top: 50px;
+}

@@ -37,3 +37,7 @@
 .prev__link {
 	margin-bottom: 30px;
 }
+.form__error {
+	padding: 10px 0px;
+	color: red;
+}

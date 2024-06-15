@@ -1,0 +1,14 @@
+.icon__link {
+    width: 32px;
+    height: 32px;
+    transition: 0.3s all;
+}
+.icon__link:nth-child(1) {
+    margin-right: 15px;
+}
+.icon__link:hover {
+    transform: translateY(-3px);
+}
+.icon__link:hover .iconFill {
+    fill: #E0B638;
+}

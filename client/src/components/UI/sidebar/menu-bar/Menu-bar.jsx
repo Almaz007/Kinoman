@@ -5,6 +5,7 @@ import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { authState } from '../../../../store/store';
 import CustomLink from '../menu-links/custom-link/custom-link';
 import { useNavigate } from 'react-router-dom';
+import { AdminLinks } from '../../../../routes/adminLinks';
 
 export default function MenuBar() {
 	const handleLogOut = authState(state => state.handleLogOut);
@@ -13,7 +14,7 @@ export default function MenuBar() {
 	return (
 		<div className={styles['menu-bar']}>
 			<div className={styles['menu']}>
-				<MenuLinks Links={NavLinksData} />
+				<MenuLinks Links={AdminLinks} />
 			</div>
 
 			<div className={styles['bottom-content']}>

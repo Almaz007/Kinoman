@@ -15,13 +15,15 @@ import { defaultValues, schema } from './schema/schema';
 import { moviesState } from '../../../../store/store';
 import FormLoader from '../FromLoader/FormLoader';
 import $api from '../../../../http';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MovieAdd = () => {
 	const [img, setImg] = useState('');
 	const [
 		fetchFormData,
 		createMovie,
+		updateMovie,
+		getMovieDataById,
 		isFormLoading,
 		isFormError,
 		ageLimits,
@@ -29,6 +31,8 @@ const MovieAdd = () => {
 	] = moviesState(state => [
 		state.fetchFormData,
 		state.createMovie,
+		state.updateMovie,
+		state.getMovieDataById,
 		state.isFormLoading,
 		state.isFormError,
 		state.ageLimits,
@@ -36,8 +40,9 @@ const MovieAdd = () => {
 	]);
 
 	const navigate = useNavigate();
+	const { id } = useParams();
 
-	const { control, handleSubmit } = useForm({
+	const { control, reset, handleSubmit } = useForm({
 		defaultValues,
 		mode: 'onChange',
 		resolver: yupResolver(schema)
@@ -45,15 +50,26 @@ const MovieAdd = () => {
 
 	useEffect(() => {
 		fetchFormData();
+
+		if (id) {
+			getMovieDataById(id, reset, setImg);
+		}
 	}, []);
 
 	const submit = data => {
-		createMovie(data, navigate);
+		if (id) {
+			updateMovie(data, navigate);
+		} else {
+			createMovie(data, navigate);
+		}
 	};
 
 	return (
 		<section>
-			<AdminPageTitle title='Добавление фильма' className={styles['title']} />
+			<AdminPageTitle
+				title={id ? 'Редактирование' : 'Добавление фильма'}
+				className={styles['title']}
+			/>
 			<PrevLink text='Назад' className={styles['prev__link']} />
 
 			<form className={styles['form']} onSubmit={handleSubmit(submit)}>
@@ -73,8 +89,6 @@ const MovieAdd = () => {
 				</div>
 				{isFormLoading ? (
 					<FormLoader />
-				) : isFormError ? (
-					<p>{isFormError}</p>
 				) : (
 					<>
 						<div className={styles['entering__data']}>
@@ -109,7 +123,7 @@ const MovieAdd = () => {
 								sx={{ width: 300 }}
 							/>
 							<SelectItem
-								name='ageLimit'
+								name='ageLimitId'
 								label='Возрастное ограничение'
 								control={control}
 								sx={{ width: 300 }}
@@ -138,7 +152,11 @@ const MovieAdd = () => {
 								sx={{ width: 620 }}
 							/>
 						</div>
-						<MyButton type='submit'>отправить</MyButton>
+
+						{isFormError && (
+							<p className={styles['form__error']}>{isFormError}</p>
+						)}
+						<MyButton type='submit'>{id ? 'соханить' : 'добавить'}</MyButton>
 					</>
 				)}
 			</form>

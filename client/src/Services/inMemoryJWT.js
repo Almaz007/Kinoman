@@ -1,45 +1,45 @@
-import config from '../config'
-import $api from '../http/index'
+import config from '../config';
+import $api from '../http/index';
 const inMemoryJWTService = () => {
-	let inMemoryJWT = null
+	let inMemoryJWT = null;
 
-	const getToken = () => inMemoryJWT
+	const getToken = () => inMemoryJWT;
 
 	const setToken = (token, tokenExpiration) => {
-		inMemoryJWT = token
-		refreshToken(tokenExpiration)
-	}
+		inMemoryJWT = token;
+		refreshToken(tokenExpiration);
+	};
 
 	const deleteToken = () => {
-		inMemoryJWT = null
-		abortRefreshToken()
-		localStorage.setItem(config.LOGOUT_STORAGE_KEY, Date.now())
-	}
+		inMemoryJWT = null;
+		abortRefreshToken();
+		localStorage.setItem(config.LOGOUT_STORAGE_KEY, Date.now());
+	};
 
-	let refreshTimeoutId = null
+	let refreshTimeoutId = null;
 
 	const refreshToken = expiration => {
-		const timeoutTrigger = expiration - 20000
+		const timeoutTrigger = expiration - 20000;
 
 		refreshTimeoutId = setTimeout(() => {
 			$api
 				.post('/auth/refresh')
 				.then(res => {
-					const { accesToken, accesTokenExpiration } = res.data
-					setToken(accesToken, accesTokenExpiration)
+					const { accesToken, accesTokenExpiration } = res.data;
+					setToken(accesToken, accesTokenExpiration);
 				})
 				.catch(err => {
-					console.log(err)
-				})
-		}, timeoutTrigger)
-	}
+					console.log(err);
+				});
+		}, timeoutTrigger);
+	};
 
 	const abortRefreshToken = () => {
 		if (refreshTimeoutId) {
-			clearTimeout(refreshTimeoutId)
+			clearTimeout(refreshTimeoutId);
 		}
-	}
-	return { getToken, setToken, deleteToken }
-}
+	};
+	return { getToken, setToken, deleteToken, abortRefreshToken };
+};
 
-export default inMemoryJWTService()
+export default inMemoryJWTService();

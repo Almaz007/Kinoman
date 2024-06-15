@@ -24,7 +24,7 @@ const SelectItem = ({ selectItems, name, control, label, ...props }) => {
 						onChange={onChange}
 					>
 						{selectItems.map(item => (
-							<MenuItem key={item.id} value={item.name}>
+							<MenuItem key={item.id} value={item.id}>
 								{item.name}
 							</MenuItem>
 						))}

@@ -100,7 +100,7 @@ CREATE TABLE "Movies" (
     "country" TEXT NOT NULL,
     "directore" TEXT NOT NULL,
     "rating" DOUBLE PRECISION NOT NULL,
-    "ageLimit" TEXT NOT NULL,
+    "ageLimitId" INTEGER,
     "description" TEXT NOT NULL,
     "posterLink" TEXT NOT NULL,
 
@@ -122,6 +122,14 @@ CREATE TABLE "Genres" (
     "description" TEXT,
 
     CONSTRAINT "Genres_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AgeLimits" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "AgeLimits_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -171,6 +179,9 @@ ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_userId_fkey" FOREIGN KEY ("userI
 
 -- AddForeignKey
 ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_unauthorizedUserId_fkey" FOREIGN KEY ("unauthorizedUserId") REFERENCES "UnauthorizedUsers"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Movies" ADD CONSTRAINT "Movies_ageLimitId_fkey" FOREIGN KEY ("ageLimitId") REFERENCES "AgeLimits"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "MoviesGenres" ADD CONSTRAINT "MoviesGenres_moiveId_fkey" FOREIGN KEY ("moiveId") REFERENCES "Movies"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

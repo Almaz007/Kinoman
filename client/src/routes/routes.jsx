@@ -60,6 +60,10 @@ export const adminRoutes = [
 		element: <MovieAdd />
 	},
 	{
+		path: 'MovieAdd/:id/edit',
+		element: <MovieAdd />
+	},
+	{
 		path: 'Screenings',
 		element: <Screenings />
 	},

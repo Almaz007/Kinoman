@@ -1,10 +1,10 @@
 export default function getMaxRow(data) {
 	const maxObject = data.reduce((max, obj) => {
 		if (obj.row > max.row) {
-			return obj
+			return obj;
 		} else {
-			return max
+			return max;
 		}
-	})
-	return maxObject.row
+	});
+	return maxObject.row;
 }

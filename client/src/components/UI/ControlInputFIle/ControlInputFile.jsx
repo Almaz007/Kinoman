@@ -4,7 +4,7 @@ import MyButton from '../button/MyButton';
 import $api from '../../../http';
 import styles from './controlInputFille.module.css';
 
-const ControlInputFile = ({ setImg, name, control, ...props }) => {
+const ControlInputFile = ({ setImg, img, name, control, ...props }) => {
 	const fileRef = useRef(null);
 
 	const convert2base64 = (event, onChange) => {
@@ -26,7 +26,6 @@ const ControlInputFile = ({ setImg, name, control, ...props }) => {
 		fileRef.current.click();
 	};
 
-	console.log('render');
 	return (
 		<Controller
 			name={name}
@@ -35,7 +34,7 @@ const ControlInputFile = ({ setImg, name, control, ...props }) => {
 				<div>
 					<MyButton {...props} onClick={handleClick}>
 						{' '}
-						Загрузить изображение
+						{img ? 'Изменить фото' : 'Загрузить фото'}
 					</MyButton>
 					<input
 						type='file'

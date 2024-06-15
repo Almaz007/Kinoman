@@ -1,0 +1,43 @@
+.movie__card {
+	display: flex;
+	justify-content: space-between;
+
+	/* column-gap: 20px; */
+	cursor: pointer;
+
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	overflow: hidden;
+}
+.movie__info {
+	padding: 10px;
+	transition: var(--tran-03);
+}
+.movie__info:hover {
+	background-color: #c7e0ff;
+}
+.movie__actions {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	min-width: 60px;
+	transition: var(--tran-03);
+}
+.movie__actions:hover {
+	background-color: red;
+}
+
+.button {
+	cursor: pointer;
+	font-size: 24px;
+	/* transition: var(--tran-03); */
+}
+.movie__actions:hover > .button {
+	color: #fff;
+}
+.title {
+	font-size: 22px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}

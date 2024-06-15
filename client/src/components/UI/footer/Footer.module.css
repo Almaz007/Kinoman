@@ -1,0 +1,138 @@
+.footer {
+    padding: 42px 0px 37px;
+    background-color: #2447C8;
+    bottom: 0px;
+   
+    color: #FFF;
+    line-height: 1.5; 
+    letter-spacing: 0.16px;
+}
+
+.footer__top {
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+.logo__time__column {
+    display: flex;
+    flex-direction: column;
+    row-gap: 54px;
+    align-items: flex-start;
+    /* margin-right: 131px; */
+}
+.time__title {
+    color: rgba(255, 255, 255, 0.60);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    margin-bottom: 15px;
+}
+.footer__title {
+    color: rgba(255, 255, 255, 0.60);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.44px;
+    margin-bottom: 15px;
+}
+.last{
+    margin-bottom: 20px;
+}
+.nav__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    /* margin-right: 151px; */
+}
+.nav__list li  {
+    transition: 0.3s all;
+}
+.nav__list li:hover {
+    color: #E0B638;
+    transform: translateY(-2px);
+} 
+
+.contacts {
+    /* margin-right: 102px; */
+}
+.contact__info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.adress {
+    max-width: 269px;
+}
+
+.ac__title {
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 9px;
+}
+.administration__cashier {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+.num {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.2px;
+}
+
+/*footer bottom*/
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer__bottom__btn {
+    display: flex;
+    column-gap: 20px
+}
+.download__btn {
+    display: flex !important;
+    /* align-items: center; */
+    column-gap: 8px;
+
+    cursor: pointer;
+    border-radius: 6.4px;
+    border: 0.8px solid #FFF;
+   
+    width: 148px;
+    /* padding: 5px 8px; */
+
+    transition: 0.3s all;
+}
+.download__btn__text {
+    padding: 5px 0px;
+}
+.download__btn:hover {
+    background-color: #456bf6;
+}
+.btn__logo__AppStore {
+    width: 29px;
+    height: 29px;
+    margin: 5px 0px 5px 8px;
+}
+.btn__logo__PlayMaket {
+    width: 28px;
+    height: 28px;
+
+    margin: 7px 0px 7px 9px;
+    
+}
+.btn__title {
+    color: #FFF;
+    font-size: 9.6px;
+    line-height: 1.44;
+}
+.btn__name {
+    font-size: 14.4px;
+    font-weight: 600;
+    line-height: 1.44; 
+}
+
+

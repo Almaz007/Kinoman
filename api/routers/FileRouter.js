@@ -14,7 +14,7 @@ router.post(
 				url: `/uploads/movieImages/${req.file.filename}`
 			});
 		} catch (err) {
-			next(err);
+			console.log(err);
 		}
 	}
 );

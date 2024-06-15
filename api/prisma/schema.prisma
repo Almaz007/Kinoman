@@ -17,6 +17,7 @@ model User {
   password        String
   phoneNumber     String
   roleId          Int
+  posterLink      String           @default("")
   refreshSessions RefreshSession[]
   bookings        Booking[]
   role            Role             @relation(fields: [roleId], references: [id])
@@ -119,24 +120,26 @@ model Booking {
 }
 
 model Movie {
-  id          Int          @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   duration    Int
   releaseDate DateTime
   country     String
   directore   String
   rating      Float
-  ageLimit    String
+  ageLimitId  Int?
   description String
   posterLink  String
-  genres      MovieGenre[]
-  screenings  Screening[]
+
+  ageLimit   AgeLimit?    @relation(fields: [ageLimitId], references: [id], onDelete: SetNull)
+  genres     MovieGenre[]
+  screenings Screening[]
 
   @@map("Movies")
 }
 
 model MovieGenre {
-  movie   Movie @relation(fields: [moiveId], references: [id])
+  movie   Movie @relation(fields: [moiveId], references: [id], onDelete: Cascade)
   moiveId Int
   genre   Genre @relation(fields: [genreId], references: [id])
   genreId Int
@@ -155,8 +158,9 @@ model Genre {
 }
 
 model AgeLimit {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String
+  Movie Movie[]
 
   @@map("AgeLimits")
 }

@@ -137,6 +137,73 @@ class AuthService {
 			accesTokenExpiration: ACCESS_TOKEN_EXPIRATION
 		};
 	}
+
+	static async updateUserData({
+		fingerprint,
+		currentRefreshToken,
+		userId,
+		userData: newUserData
+	}) {
+		if (!currentRefreshToken || currentRefreshToken === 'undefined') {
+			throw new Unauthorized('Вы не авторизованы');
+		}
+
+		const refreshSession = await TokenService.findRefreshSession(
+			currentRefreshToken
+		);
+		if (!refreshSession) {
+			return new Unauthorized();
+		}
+
+		if (fingerprint.hash !== refreshSession.fingerprint) {
+			throw new Forbidden();
+		}
+
+		const user = await prisma.user.findFirst({
+			where: {
+				NOT: {
+					id: userId
+				},
+				email: newUserData.email
+			}
+		});
+
+		if (user) {
+			throw new Conflict('Пользовтаель с таким email уже существует');
+		}
+
+		await TokenService.deleteRefreshSession(currentRefreshToken);
+
+		let payload = TokenService.verifyRefreshToken(currentRefreshToken);
+		if (!payload) {
+			throw new Forbidden('Не правильный рефреш токен');
+		}
+		const userData = await prisma.user.update({
+			where: {
+				id: userId
+			},
+			data: {
+				...newUserData
+			}
+		});
+		const userDto = new UserDto(userData);
+
+		const accesToken = TokenService.generateAccessToken({ ...userDto });
+		const refreshToken = TokenService.generateRefreshToken({ ...userDto });
+
+		await TokenService.createRefreshSession(
+			userDto.id,
+			refreshToken,
+			fingerprint.hash
+		);
+
+		return {
+			accesToken,
+			refreshToken,
+			userDto,
+			accesTokenExpiration: ACCESS_TOKEN_EXPIRATION
+		};
+	}
 }
 
 export default AuthService;

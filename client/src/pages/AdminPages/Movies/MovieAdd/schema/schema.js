@@ -2,11 +2,12 @@ import * as yup from 'yup';
 
 export const defaultValues = {
 	title: '',
-	duration: 60,
+	duration: '',
 	directore: '',
+	description: '',
 	rating: '',
 	country: '',
-	ageLimit: '',
+	ageLimitId: '',
 	genres: [],
 	releaseDate: new Date()
 };
@@ -27,7 +28,7 @@ export const schema = yup.object().shape({
 		.typeError('значение должно быть числом')
 		.min(0, 'значение должно быть не меньше 60 ')
 		.required('Обязательное поле'),
-	ageLimit: yup.string().required('Обязательное поле'),
-	genres: yup.array().of(yup.string()).min(1, 'выбыерите не менее 1'),
+	ageLimitId: yup.number().required('Обязательное поле'),
+	genres: yup.array().of(yup.number()).min(1, 'выбыерите не менее 1'),
 	releaseDate: yup.date().required('Обязательное поле')
 });
