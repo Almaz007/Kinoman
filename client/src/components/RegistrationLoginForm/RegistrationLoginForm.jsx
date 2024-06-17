@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-import styles from './registrationLoginForm.module.css'
+import styles from './registrationLoginForm.module.css';
 
-import RegistrationForm from './RegistrationForm/RegistrationForm'
-import LoginForm from './LoginForm/LoginForm'
-import OverlayContainer from './OverlayContainer/OverlayContainer'
+import RegistrationForm from './RegistrationForm/RegistrationForm';
+import LoginForm from './LoginForm/LoginForm';
+import OverlayContainer from './OverlayContainer/OverlayContainer';
 
 const RegistrationLoginForm = () => {
-	const [panelSwitch, setPanelSwitch] = useState(false)
+	const [panelSwitch, setPanelSwitch] = useState(false);
 
 	return (
 		<div
@@ -15,7 +15,7 @@ const RegistrationLoginForm = () => {
 				panelSwitch
 					? [
 							styles.registration__login__container,
-							styles.right__panel__active,
+							styles.right__panel__active
 					  ].join(' ')
 					: styles.registration__login__container
 			}
@@ -23,7 +23,7 @@ const RegistrationLoginForm = () => {
 			<div
 				className={[
 					styles.form__container,
-					styles.registration__container,
+					styles.registration__container
 				].join(' ')}
 			>
 				<RegistrationForm />
@@ -40,7 +40,7 @@ const RegistrationLoginForm = () => {
 				/>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default RegistrationLoginForm
+export default RegistrationLoginForm;

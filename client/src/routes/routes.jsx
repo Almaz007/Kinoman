@@ -8,9 +8,8 @@ import AdminNews from '../pages/AdminPages/AdminNews/AdminNews';
 import MovieSinglePage from '../pages/PublicPages/MovieSinglePage/MovieSinglePage';
 import Cinema from '../pages/PublicPages/Cinema/Cinema';
 import Contacts from '../pages/PublicPages/Contacts/Contacts';
-import MovieAdd from '../pages/AdminPages/Movies/MovieAdd/MovieAdd';
+import MovieAddEdit from '../pages/AdminPages/Movies/MovieAddEdit/MovieAddEdit';
 import UserProfile from '../pages/authUserPages/UserProfile/UserProfile';
-import EditProfile from '../pages/authUserPages/EditProfile/EditProfile';
 import Help from '../pages/authUserPages/Help/Help';
 import News from '../pages/PublicPages/News/News';
 import Orders from '../pages/authUserPages/Orders/Orders';
@@ -57,11 +56,11 @@ export const adminRoutes = [
 	},
 	{
 		path: 'MovieAdd',
-		element: <MovieAdd />
+		element: <MovieAddEdit />
 	},
 	{
-		path: 'MovieAdd/:id/edit',
-		element: <MovieAdd />
+		path: 'Movie/:id/edit',
+		element: <MovieAddEdit />
 	},
 	{
 		path: 'Screenings',
@@ -81,10 +80,6 @@ export const authUserRoutes = [
 	{
 		path: 'userProfile',
 		element: <UserProfile />
-	},
-	{
-		path: 'editProfile',
-		element: <EditProfile />
 	},
 	{
 		path: 'orders',

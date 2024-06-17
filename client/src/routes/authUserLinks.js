@@ -13,12 +13,6 @@ export const authUserLinks = [
 		icon: faUser
 	},
 	{
-		id: 2,
-		path: 'editProfile',
-		text: 'Редактирование',
-		icon: faPenToSquare
-	},
-	{
 		id: 3,
 		path: 'orders',
 		text: 'Заказы',

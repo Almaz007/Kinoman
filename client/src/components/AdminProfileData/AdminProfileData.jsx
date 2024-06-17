@@ -1,55 +1,24 @@
-import { useForm } from 'react-hook-form';
-import {
-	defaultValues,
-	schema
-} from '../../pages/AdminPages/Profile/schema/schema';
-import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './adminProfile.module.css';
-import { useEffect, useState } from 'react';
 import ControlInputFile from '../UI/ControlInputFIle/ControlInputFile';
 import MyButton from '../UI/button/MyButton';
 import { Input } from '../UI/Input/Input';
 import PasswordInput from '../UI/PasswordInput/PasswordInput';
-import { adminProfileState, authState } from '../../store/store';
-import ImgLoader from './imgLoader/imgLoader';
+import ImgLoader from '../imgLoader/imgLoader';
 import { MdDelete } from 'react-icons/md';
+import useProfileData from '../../hooks/useProfileData';
 
 const AdminProfileData = () => {
-	const [img, setImg] = useState('');
-	const [userData, updateUserData] = authState(state => [
-		state.userData,
-		state.updateUserData
-	]);
-	const [
-		initFormData,
-		updateProfileData,
+	const {
+		submit,
+		img,
+		setImg,
+		delImg,
+		control,
+		handleSubmit,
 		isErrorMessage,
 		isDataSendLoading,
 		isImgLodaing
-	] = adminProfileState(state => [
-		state.initFormData,
-		state.updateProfileData,
-		state.isErrorMessage,
-		state.isDataSendLoading,
-		state.isImgLodaing
-	]);
-
-	const { control, reset, setValue, handleSubmit } = useForm({
-		defaultValues,
-		mode: 'onChange',
-		resolver: yupResolver(schema)
-	});
-
-	const submit = data => {
-		updateProfileData(data, updateUserData);
-	};
-	const delImg = () => {
-		setImg('');
-		setValue('imageFile', {});
-	};
-	useEffect(() => {
-		initFormData(userData, reset, setImg);
-	}, [userData, reset]);
+	} = useProfileData();
 	return (
 		<>
 			<form className={styles['profile__from']} onSubmit={handleSubmit(submit)}>
@@ -79,7 +48,6 @@ const AdminProfileData = () => {
 						/>
 					</div>
 					<div className={styles['fields']}>
-						{' '}
 						<Input
 							label='UserName'
 							name='userName'
@@ -105,13 +73,13 @@ const AdminProfileData = () => {
 					<div className={styles['password__fields']}>
 						<PasswordInput
 							label='Новый пароль'
-							name='newPassword'
+							name='password'
 							control={control}
 							sx={{ width: 300 }}
 						/>
 						<PasswordInput
 							label='Подтвердите пароль'
-							name='confirmNewPassword'
+							name='confirmPassword'
 							control={control}
 							sx={{ width: 300 }}
 						/>

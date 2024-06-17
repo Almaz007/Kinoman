@@ -1,16 +1,15 @@
-import styles from './stageBtns.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { screeningBookingState } from '../../../store/store'
+import styles from './stageBtns.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { screeningBookingState } from '../../../store/store';
+import { ObjEmpty } from '../../../utils/Objempty';
 
 const NextPrevious = ({ handleclick }) => {
-	const [stage, decStage, chequeSendInfo] = screeningBookingState(state => [
-		state.stage,
-		state.decStage,
-		state.chequeSendInfo,
-	])
+	const [stage, decStage, chequeSendInfo, errors] = screeningBookingState(
+		state => [state.stage, state.decStage, state.chequeSendInfo, state.errors]
+	);
 
-	const { email, phoneNumber } = chequeSendInfo
+	const { email, phoneNumber } = chequeSendInfo;
 	return (
 		<>
 			<div className={styles.prevBtn} onClick={() => decStage()}>
@@ -19,19 +18,19 @@ const NextPrevious = ({ handleclick }) => {
 			<div
 				className={
 					stage === 1
-						? !email || !phoneNumber
+						? !email || !phoneNumber || ObjEmpty(errors)
 							? [styles.noActvie, styles.nextBtn].join(' ')
 							: styles.nextBtn
 						: styles.nextBtn
 				}
 				onClick={() => {
-					handleclick()
+					handleclick();
 				}}
 			>
 				{stage === 2 ? 'Оплатить' : 'Продолжить'}
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default NextPrevious
+export default NextPrevious;

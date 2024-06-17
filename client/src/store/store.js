@@ -7,25 +7,35 @@ import PaymentService from '../Services/PaymentService';
 import MovieService from '../Services/MovieService';
 import config from '../config';
 import axios from 'axios';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 export const authState = create((set, get) => ({
 	userData: {},
 	isAuth: false,
 	isLoading: true,
+	isSigninError: '',
+	isSignupError: '',
 
 	updateUserData: data => set({ userData: data }),
-	updateIsAuth: bool => set(() => ({ isAuth: bool })),
-	updateIsLoading: bool => set(() => ({ isLoading: bool })),
 
-	handleSignUp: async (data, setShowModal) => {
+	handleSignUp: async (data, setShowModal, Swal) => {
 		try {
 			let response = await $api.post('/auth/sign-up', data);
-			const { userDto, accesToken, accesTokenExpiration } = response.data;
-			inMemoryJWT.setToken(accesToken, accesTokenExpiration);
-			set({ isAuth: true, userData: userDto });
+			// const { userDto, accesToken, accesTokenExpiration } = response.data;
+			// inMemoryJWT.setToken(accesToken, accesTokenExpiration);
+			// set({ isAuth: true, userData: userDto, isErrorMessage: '' });
 			setShowModal(false);
+			Swal.fire({
+				icon: 'success',
+				title: 'Регистрация прошла успешно',
+				text: 'Подтвердите аккаунт, перейдя по ссылке, отправленной на почту которую указали',
+				ConfirmButtonText: 'Ок'
+			});
 		} catch (err) {
-			console.log(err);
+			const message =
+				err.response?.data?.error ||
+				`${err.message}, ${err.response?.data?.message}`;
+			set({ isSignupError: message });
 		}
 	},
 	handleSignIn: async (data, setShowModal, navigate) => {
@@ -33,11 +43,14 @@ export const authState = create((set, get) => ({
 			let response = await $api.post('/auth/sign-in', data);
 			const { userDto, accesToken, accesTokenExpiration } = response.data;
 			inMemoryJWT.setToken(accesToken, accesTokenExpiration);
-			set({ isAuth: true, userData: userDto });
+			set({ isAuth: true, userData: userDto, isErrorMessage: '' });
 			setShowModal(false);
 			if (userDto.roleId === 2) navigate('/');
 		} catch (err) {
-			console.log(err);
+			const message =
+				err.response?.data?.error ||
+				`${err.message}, ${err.response?.data?.message}`;
+			set({ isSigninError: message });
 		}
 	},
 	handleLogOut: async navigate => {
@@ -152,6 +165,9 @@ export const screeningBookingState = create((set, get) => ({
 		email: '',
 		phoneNumber: ''
 	},
+	errors: {},
+	updateErrors: errors => set({ errors: errors }),
+
 	updateСhequeSendInfo: (email, phoneNumber) => {
 		set({ chequeSendInfo: { email, phoneNumber } });
 	},
@@ -181,7 +197,7 @@ export const screeningBookingState = create((set, get) => ({
 			seatsInfo: [],
 			selectedSeats: [],
 			stage: 0,
-			checkSendInfo: {
+			chequeSendInfo: {
 				email: '',
 				phoneNumber: ''
 			}
@@ -268,7 +284,6 @@ export const screeningBookingState = create((set, get) => ({
 
 export const moviesState = create((set, get) => ({
 	isFormLoading: false,
-	isLodaingData: false,
 	isFormError: '',
 	ageLimits: [],
 	genres: [],
@@ -282,12 +297,15 @@ export const moviesState = create((set, get) => ({
 
 			set({ ageLimits, genres });
 		} catch (err) {
-			set({ isFormError: err.message });
+			const message =
+				err.response?.data?.error ||
+				`${err.message}, ${err.response?.data?.message}`;
+			set({ isFormError: message });
 		} finally {
 			set({ isFormLoading: false });
 		}
 	},
-	createMovie: async (data, navigate) => {
+	createMovie: async (data, navigate, Swal) => {
 		try {
 			const { imageFile: file, ...restData } = data;
 
@@ -300,17 +318,18 @@ export const moviesState = create((set, get) => ({
 			const posterLink = config.API_URL + resp.data.url;
 
 			const movieData = { ...restData, posterLink };
-			console.log(movieData);
+
 			const resp2 = await $api.post('/movies/createMovie', { movieData });
+			if (resp2.status !== 200)
+				return Swal.showValidationMessage(`${resp2.message}`);
 
 			navigate('/Movies');
 		} catch (err) {
-			set({ isFormError: err.message });
-		} finally {
-			set({ isLodaingData: false });
+			const message = err.response?.data?.error || err.message;
+			Swal.showValidationMessage(`Ошибка: ${message}`);
 		}
 	},
-	updateMovie: async (data, navigate) => {
+	updateMovie: async (data, navigate, Swal) => {
 		try {
 			const { imageFile: file, id, ...restData } = data;
 
@@ -325,13 +344,13 @@ export const moviesState = create((set, get) => ({
 			const resp2 = await $api.patch(`/movies/updateMovie/${id}`, {
 				movieData
 			});
-			console.log('doshel');
+			if (resp2.status !== 200)
+				return Swal.showValidationMessage(`${resp2.message}`);
+
 			navigate('/Movies');
-		} catch (error) {
-			console.log(error.message);
-			set({ isFormError: error.message });
-		} finally {
-			set({ isLodaingData: false });
+		} catch (err) {
+			const message = err.response?.data?.error || err.message;
+			Swal.showValidationMessage(`Ошибка: ${message}`);
 		}
 	},
 	getMovieDataById: async (id, reset, setImg) => {
@@ -355,7 +374,10 @@ export const moviesState = create((set, get) => ({
 			movieData['imageFile'] = file;
 			reset(movieData);
 		} catch (err) {
-			set({ isFormError: err.message });
+			const message =
+				err.response?.data?.error ||
+				`${err.message}, ${err.response?.data?.message}`;
+			set({ isFormError: message });
 		} finally {
 			set({ isFormLoading: false });
 		}
@@ -368,22 +390,33 @@ export const moviesState = create((set, get) => ({
 		} catch {}
 	},
 
-	deleteMovie: async id => {
+	deleteMovie: async (id, Swal) => {
 		try {
 			const resp = await $api.delete(`/movies/deleteMovie/${id}`);
+
+			if (resp.status !== 200)
+				return Swal.showValidationMessage(`${resp.message}`);
+
 			const { movies } = get();
 			const newMovies = movies.filter(movie => movie.id !== id);
 			set({ movies: newMovies });
 		} catch (err) {
-			console.log(err.message);
+			const message =
+				err.response?.data?.error ||
+				`${err.message}, ${err.response?.data?.message}`;
+			Swal.showValidationMessage(`Ошибка: ${message}`);
 		}
 	}
 }));
 
-export const adminProfileState = create((set, get) => ({
+export const ProfileState = create((set, get) => ({
 	isDataSendLoading: false,
 	isImgLodaing: false,
 	isErrorMessage: '',
+
+	clearValues: () => {
+		se({ isDataSendLoading: false, isImgLodaing: false, isErrorMessage: '' });
+	},
 
 	initFormData: async (userData, reset, setImg) => {
 		try {
@@ -400,7 +433,9 @@ export const adminProfileState = create((set, get) => ({
 				formData['imageFile'] = file;
 				setImg(posterLink);
 			}
-
+			formData['password'] = '';
+			formData['confirmPassword'] = '';
+			console.log(formData);
 			reset(formData);
 		} catch (err) {
 			const message = err.response.data?.error || err.message;
@@ -409,10 +444,9 @@ export const adminProfileState = create((set, get) => ({
 			set({ isImgLodaing: false });
 		}
 	},
-	updateProfileData: async (data, updateUserData) => {
+	updateProfileData: async (data, Swal) => {
 		try {
-			const { id, imageFile, confirmNewPassword, newPassword, ...newUserData } =
-				data;
+			const { id, imageFile, confirmPassword, ...newUserData } = data;
 
 			newUserData['posterLink'] = '';
 
@@ -421,24 +455,26 @@ export const adminProfileState = create((set, get) => ({
 				formData.append('image', imageFile);
 
 				set({ isLodaingData: true });
-				const resp = await $api.post('/files/upload/movieImg', formData);
+				const resp = await $api.post('/files/upload/profileImg', formData);
 				const posterLink = config.API_URL + resp.data.url;
 				newUserData['posterLink'] = posterLink;
 			}
-
-			console.log(newUserData);
 
 			const response = await $api.patch(`/auth/updateUserData/${id}`, {
 				newUserData
 			});
 
+			if (response.status !== 200) {
+				return Swal.showValidationMessage(`${response.message}`);
+			}
+
 			const { userDto, accesToken, accesTokenExpiration } = response.data;
 			inMemoryJWT.abortRefreshToken();
 			inMemoryJWT.setToken(accesToken, accesTokenExpiration);
-			updateUserData(userDto);
+			return userDto;
 		} catch (err) {
 			const message = err.response.data?.error || err.message;
-			set({ isErrorMessage: message });
+			Swal.showValidationMessage(`Ошибка: ${message}`);
 		}
 	}
 }));

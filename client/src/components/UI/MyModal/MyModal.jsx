@@ -2,11 +2,14 @@ import cn from 'classnames';
 import styles from './myModal.module.css';
 import { Transition } from 'react-transition-group';
 import { useRef } from 'react';
+import ReactDOM from 'react-dom/client';
+import { createPortal } from 'react-dom';
+const portal = document.querySelector('#portalForModal');
 
-export default function MyModal({ visible, setVisible, children }) {
+const MyModal = ({ visible, setVisible, children }) => {
 	const nodeRef = useRef(null);
 
-	return (
+	return createPortal(
 		<Transition
 			nodeRef={nodeRef}
 			in={visible}
@@ -41,6 +44,9 @@ export default function MyModal({ visible, setVisible, children }) {
 					</div>
 				</div>
 			)}
-		</Transition>
+		</Transition>,
+		portal
 	);
-}
+};
+
+export default MyModal;

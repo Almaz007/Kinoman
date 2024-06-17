@@ -1,11 +1,11 @@
 import AddRecords from '../../../components/AddRecords/AddRecords';
-import AdminPageTitle from '../../../components/AdminPageTitle/AdminPageTitle';
+import AuthPageTitle from '../../../components/AuthPageTitle/AuthPageTitle';
 import styles from './screenings.module.css';
 
 export default function Screenings() {
 	return (
 		<div>
-			<AdminPageTitle title='Сеансы' />
+			<AuthPageTitle title='Сеансы' />
 			<AddRecords>
 				<div style={{ height: '200px' }}></div>
 				<div style={{ height: '200px' }}></div>

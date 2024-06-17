@@ -1,9 +1,9 @@
-import AdminPageTitle from '../../../components/AdminPageTitle/AdminPageTitle';
+import AuthPageTitle from '../../../components/AuthPageTitle/AuthPageTitle';
 
 export default function Bookings() {
 	return (
 		<div>
-			<AdminPageTitle title='Бронирования' />
+			<AuthPageTitle title='Бронирования' />
 		</div>
 	);
 }

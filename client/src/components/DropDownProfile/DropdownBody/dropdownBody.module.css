@@ -1,6 +1,6 @@
 .dropdown-body {
 	position: absolute;
-	z-index: 1;
+	z-index: 1000;
 	top: 68px;
 	right: 0;
 	width: 250px;

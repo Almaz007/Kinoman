@@ -3,7 +3,8 @@ import {
 	InputLabel,
 	OutlinedInput,
 	InputAdornment,
-	IconButton
+	IconButton,
+	FormHelperText
 } from '@mui/material';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
@@ -22,9 +23,10 @@ const PasswordInput = ({ name, control, label, ...props }) => {
 			name={name}
 			control={control}
 			render={({ field, fieldState: { error } }) => (
-				<FormControl {...field} {...props} variant='outlined'>
+				<FormControl {...props} error={!!error} variant='outlined'>
 					<InputLabel>{label}</InputLabel>
 					<OutlinedInput
+						{...field}
 						type={showPassword ? 'text' : 'password'}
 						endAdornment={
 							<InputAdornment position='end'>
@@ -40,6 +42,7 @@ const PasswordInput = ({ name, control, label, ...props }) => {
 						}
 						label={label}
 					/>
+					{error && <FormHelperText>{error?.message}</FormHelperText>}
 				</FormControl>
 			)}
 		/>

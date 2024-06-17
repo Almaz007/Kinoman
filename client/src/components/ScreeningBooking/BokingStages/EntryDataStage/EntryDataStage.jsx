@@ -1,105 +1,84 @@
-import styles from './entryDataStage.module.css'
-import { useEffect, useMemo } from 'react'
-import { authState } from '../../../../store/store'
-import { screeningBookingState } from '../../../../store/store'
-import { useForm } from 'react-hook-form'
+import styles from './entryDataStage.module.css';
+import { useEffect, useMemo } from 'react';
+import { authState } from '../../../../store/store';
+import { screeningBookingState } from '../../../../store/store';
+import { useForm } from 'react-hook-form';
+import { Input } from '../../../UI/Input/Input';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../schems/BookingEntryDataSchema/Schema';
 
 const EntryDataStage = () => {
-	const [isAuth, userData] = authState(state => [state.isAuth, state.userData])
-	const [updateСhequeSendInfo, getСhequeSendInfo] = screeningBookingState(
-		state => [state.updateСhequeSendInfo, state.getСhequeSendInfo]
-	)
+	const [isAuth, userData] = authState(state => [state.isAuth, state.userData]);
+
+	const [updateСhequeSendInfo, updateErrors, chequeSendInfo] =
+		screeningBookingState(state => [
+			state.updateСhequeSendInfo,
+			state.updateErrors,
+			state.chequeSendInfo
+		]);
+	const { email, phoneNumber } = chequeSendInfo;
 
 	const {
-		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
+		control
 	} = useForm({
+		defaultValues: { email, phoneNumber },
 		mode: 'onChange',
-	})
+		resolver: yupResolver(schema)
+	});
 
 	const onSubmit = async data => {
-		const { email, phoneNumber } = data
-		updateСhequeSendInfo(email, phoneNumber)
-	}
-	const isValid = !!Object.keys(errors)
+		console.log(data);
+		const { email, phoneNumber } = data;
+		updateСhequeSendInfo(email, phoneNumber);
+	};
+	const handleclick = () => {
+		const { email, phoneNumber } = userData;
+		const newData = { email, phoneNumber };
+
+		reset(newData);
+		onSubmit(newData);
+	};
 
 	useEffect(() => {
-		updateСhequeSendInfo('', '')
-	}, [isValid])
-
-	const { defaultEmail, defaultPhoneNumber } = useMemo(() => {
-		return getСhequeSendInfo()
-	}, [])
-
-	// useEffect(() => {
-	// 	if (isAuth) {
-	// 		updateСhequeSendInfo(userData.email, userData.phoneNumber)
-	// 	}
-	// }, [isAuth])
+		updateErrors(errors);
+	}, [errors]);
 
 	return (
 		<div className={styles.entryDataBlock}>
 			<h2 className={styles.title}>Ввод данных</h2>
 			<div className={styles.entryData}>
 				<h2 className={styles.entryDataTitle}>Введите данные</h2>
-				<form onChange={handleSubmit(onSubmit)}>
-					<div
-						className={
-							errors?.email
-								? [styles.formGroup, styles.errorField].join(' ')
-								: styles.formGroup
-						}
-					>
-						<input
-							className={styles.formInput}
-							defaultValue={defaultEmail}
-							placeholder='example@gmail.com'
-							{...register('email', {
-								required: 'Это обязательное поле',
-								pattern: {
-									value:
-										/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-									message: 'Не корректный email',
-								},
-							})}
-						/>
-						<label className={styles.labelForInput}>Email</label>
-						{errors?.email && (
-							<p className={styles.errorMessage}>{errors?.email?.message}</p>
-						)}
-					</div>
-					<div
-						className={
-							errors?.phoneNumber
-								? [styles.formGroup, styles.errorField].join(' ')
-								: styles.formGroup
-						}
-					>
-						<input
-							className={styles.formInput}
-							defaultValue={defaultPhoneNumber}
-							placeholder='+7 900 000-00-00'
-							{...register('phoneNumber', {
-								required: 'Это обязательное поле',
-								pattern: {
-									value: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/,
-									message: 'Не корректный номер телефона',
-								},
-							})}
-						/>
-						<label className={styles.labelForInput}>Номер телефона</label>
-						{errors?.phoneNumber && (
-							<p className={styles.errorMessage}>
-								{errors?.phoneNumber?.message}
-							</p>
-						)}
-					</div>
+				<form className={styles['form']} onChange={handleSubmit(onSubmit)}>
+					<Input
+						name='email'
+						control={control}
+						label='Почта'
+						sx={{ width: '100%' }}
+					/>
+					<Input
+						name='phoneNumber'
+						control={control}
+						label='Номер телефона'
+						sx={{ width: '100%' }}
+					/>
 				</form>
+				{isAuth && (
+					<div className={styles['fill__data']}>
+						<p className={styles['text']}>
+							Вы атворизованы и имеете возможность заполнить данные
+							автоматический
+						</p>
+						<button className={styles['fill__btn']} onClick={handleclick}>
+							Заполнить
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default EntryDataStage
+export default EntryDataStage;

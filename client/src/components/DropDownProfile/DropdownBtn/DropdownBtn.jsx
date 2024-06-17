@@ -1,13 +1,13 @@
-import styles from './dropdownBtn.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { authState } from '../../../store/store'
+import styles from './dropdownBtn.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { authState } from '../../../store/store';
 
 export default function DropdownBtn({
 	setDropdownVisible,
-	dropdownVisible = { dropdownVisible },
+	dropdownVisible = { dropdownVisible }
 }) {
-	const { userName } = authState(state => state.userData)
+	const { userName, posterLink } = authState(state => state.userData);
 
 	return (
 		<div
@@ -15,7 +15,9 @@ export default function DropdownBtn({
 			onClick={() => setDropdownVisible(prev => !prev)}
 		>
 			<div className={styles['provile-img']} style={{ width: '48px' }}>
-				<img src='/public/images/defaultAvatar.jpg' alt='avatar' />
+				{posterLink && (
+					<img className={styles['image']} src={posterLink} alt='avatar' />
+				)}
 			</div>
 			<div className={styles['profile-text']}>
 				<div className={styles['user-name']}>{userName}</div>
@@ -29,5 +31,5 @@ export default function DropdownBtn({
 				/>
 			</div>
 		</div>
-	)
+	);
 }

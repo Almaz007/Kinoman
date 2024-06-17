@@ -1,26 +1,27 @@
-import { useEffect } from 'react'
-import { screeningBookingState } from '../../store/store'
-import BookingStages from './BokingStages/BookingStages'
-import Auditorium from './Auditorium/Auditorium'
-import Loader from '../UI/loader/Loader'
-import styles from './screeningBooking.module.css'
+import { useEffect } from 'react';
+import { authState, screeningBookingState } from '../../store/store';
+import BookingStages from './BokingStages/BookingStages';
+import Auditorium from './Auditorium/Auditorium';
+import Loader from '../UI/loader/Loader';
+import styles from './screeningBooking.module.css';
 
 const ScreeningBooking = () => {
+	const userData = authState(state => state.userData);
 	const [fetchSeatsInfo, firstRender, updateFirstRender, isLoading, isError] =
 		screeningBookingState(state => [
 			state.fetchSeatsInfo,
 			state.firstRender,
 			state.updateFirstRender,
 			state.isLoading,
-			state.isError,
-		])
+			state.isError
+		]);
 
 	useEffect(() => {
 		if (firstRender) {
-			fetchSeatsInfo()
-			updateFirstRender(false)
+			fetchSeatsInfo();
+			updateFirstRender(false);
 		}
-	}, [])
+	}, []);
 
 	return (
 		<div className={styles.screeningBooking}>
@@ -37,6 +38,6 @@ const ScreeningBooking = () => {
 				</div>
 			)}
 		</div>
-	)
-}
-export default ScreeningBooking
+	);
+};
+export default ScreeningBooking;

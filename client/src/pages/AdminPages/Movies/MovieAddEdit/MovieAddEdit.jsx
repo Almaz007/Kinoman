@@ -1,69 +1,28 @@
-import { useForm } from 'react-hook-form';
-
 import { Input } from '../../../../components/UI/Input/Input';
-import AdminPageTitle from '../../../../components/AdminPageTitle/AdminPageTitle';
-import styles from './MovieAdd.module.css';
+import AdminPageTitle from '../../../../components/AuthPageTitle/AuthPageTitle';
+import styles from './MovieAddEdit.module.css';
 import PrevLink from '../../../../components/PrevLink/PrevLink';
-import { yupResolver } from '@hookform/resolvers/yup';
 import SelectItem from '../../../../components/UI/SelectItem/SelectItem';
 import DateItem from '../../../../components/UI/DateItem/DateItem';
 import ControlInputFile from '../../../../components/UI/ControlInputFIle/ControlInputFile';
-import { useEffect, useState } from 'react';
 import Textarea from '../../../../components/UI/Textarea/Textarea';
 import MyButton from '../../../../components/UI/button/MyButton';
-import { defaultValues, schema } from './schema/schema';
-import { moviesState } from '../../../../store/store';
 import FormLoader from '../FromLoader/FormLoader';
-import $api from '../../../../http';
-import { useNavigate, useParams } from 'react-router-dom';
+import useMovieAddEdit from '../../../../hooks/useMovieAddEdit';
 
-const MovieAdd = () => {
-	const [img, setImg] = useState('');
-	const [
-		fetchFormData,
-		createMovie,
-		updateMovie,
-		getMovieDataById,
-		isFormLoading,
-		isFormError,
+const MovieAddEdit = () => {
+	const {
+		id,
+		submit,
+		handleSubmit,
+		control,
+		img,
+		setImg,
 		ageLimits,
-		genres
-	] = moviesState(state => [
-		state.fetchFormData,
-		state.createMovie,
-		state.updateMovie,
-		state.getMovieDataById,
-		state.isFormLoading,
-		state.isFormError,
-		state.ageLimits,
-		state.genres
-	]);
-
-	const navigate = useNavigate();
-	const { id } = useParams();
-
-	const { control, reset, handleSubmit } = useForm({
-		defaultValues,
-		mode: 'onChange',
-		resolver: yupResolver(schema)
-	});
-
-	useEffect(() => {
-		fetchFormData();
-
-		if (id) {
-			getMovieDataById(id, reset, setImg);
-		}
-	}, []);
-
-	const submit = data => {
-		if (id) {
-			updateMovie(data, navigate);
-		} else {
-			createMovie(data, navigate);
-		}
-	};
-
+		genres,
+		isFormLoading,
+		isFormError
+	} = useMovieAddEdit();
 	return (
 		<section>
 			<AdminPageTitle
@@ -163,4 +122,4 @@ const MovieAdd = () => {
 		</section>
 	);
 };
-export default MovieAdd;
+export default MovieAddEdit;
