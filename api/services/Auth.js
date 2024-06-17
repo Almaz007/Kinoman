@@ -10,16 +10,22 @@ import {
 import { ACCESS_TOKEN_EXPIRATION } from '../constants.js';
 import prisma from '../db/db.config.js';
 import UserDto from '../dtos/userDto.js';
+import MailService from './MailService.js';
+import { v4 as uuidv4 } from 'uuid';
+import { Prisma } from '@prisma/client';
 
 class AuthService {
 	static async signIn({ email, password, fingerprint }) {
-		const userData = await prisma.user.findUnique({
+		const userData = await prisma.user.findFirst({
 			where: {
 				email: email
 			}
 		});
 		if (!userData) {
 			throw new Conflict('Пользовтаель с таким email не найден');
+		}
+		if (!userData.isActivated) {
+			throw new Conflict('Подтвердите аккаунт по ссылке, полученной на почту');
 		}
 
 		const isPasswordValid = bcrypt.compareSync(password, userData.password);
@@ -64,26 +70,40 @@ class AuthService {
 				email,
 				password: hashedPassword,
 				phoneNumber,
-				roleId: 1
+				roleId: 1,
+				isActivated: false
 			}
 		});
 
-		const userDto = new UserDto(newUser);
-		const accesToken = TokenService.generateAccessToken({ ...userDto });
-		const refreshToken = TokenService.generateRefreshToken({ ...userDto });
-
-		await TokenService.createRefreshSession(
-			userDto.id,
-			refreshToken,
-			fingerprint.hash
+		const activationLink = uuidv4(); // v34fa-asfasf-142saf-sa-asf
+		await MailService.sendActivationMail(
+			email,
+			`${process.env.API_URL}/api/auth/activate/${activationLink}`
 		);
 
-		return {
-			accesToken,
-			refreshToken,
-			userDto,
-			accesTokenExpiration: ACCESS_TOKEN_EXPIRATION
-		};
+		await prisma.activationLink.create({
+			data: {
+				userId: newUser.id,
+				link: activationLink
+			}
+		});
+
+		// const userDto = new UserDto(newUser);
+		// const accesToken = TokenService.generateAccessToken({ ...userDto });
+		// const refreshToken = TokenService.generateRefreshToken({ ...userDto });
+
+		// await TokenService.createRefreshSession(
+		// 	userDto.id,
+		// 	refreshToken,
+		// 	fingerprint.hash
+		// );
+
+		// return {
+		// 	accesToken,
+		// 	refreshToken,
+		// 	userDto,
+		// 	accesTokenExpiration: ACCESS_TOKEN_EXPIRATION
+		// };
 	}
 
 	static async logOut(refreshToken) {
@@ -137,7 +157,32 @@ class AuthService {
 			accesTokenExpiration: ACCESS_TOKEN_EXPIRATION
 		};
 	}
+	static async activate(activationLink) {
+		console.log(activationLink);
+		const link = await prisma.activationLink.findFirst({
+			where: {
+				link: activationLink
+			}
+		});
+		if (!link) {
+			throw new Conflict('Неккоректная ссылка активации');
+		}
 
+		const user = await prisma.user.update({
+			where: {
+				id: link.userId
+			},
+			data: {
+				isActivated: true
+			}
+		});
+
+		await prisma.activationLink.delete({
+			where: {
+				id: link.id
+			}
+		});
+	}
 	static async updateUserData({
 		fingerprint,
 		currentRefreshToken,
@@ -178,6 +223,9 @@ class AuthService {
 		if (!payload) {
 			throw new Forbidden('Не правильный рефреш токен');
 		}
+		if (newUserData['password'])
+			newUserData['password'] = bcrypt.hashSync(newUserData['password'], 8);
+
 		const userData = await prisma.user.update({
 			where: {
 				id: userId

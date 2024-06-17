@@ -17,12 +17,21 @@ model User {
   password        String
   phoneNumber     String
   roleId          Int
+  isActivated     Boolean
   posterLink      String           @default("")
   refreshSessions RefreshSession[]
   bookings        Booking[]
+  activationLinks ActivationLink[]
   role            Role             @relation(fields: [roleId], references: [id])
 
   @@map("Users")
+}
+
+model ActivationLink {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  link   String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Role {

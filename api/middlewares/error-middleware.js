@@ -1,7 +1,7 @@
 import { WebError } from '../utils/Errors.js';
 
 export default function errorMiddleware(err, req, res, next) {
-	console.log(err);
+	console.log(err.message);
 	// console.log("hellooooo i'm middleware")
 	if (err instanceof WebError) {
 		return res.status(err.status).json(err);

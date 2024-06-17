@@ -31,25 +31,43 @@ class AuthController {
 		const { fingerprint } = req;
 
 		try {
-			const { accesToken, refreshToken, userDto, accesTokenExpiration } =
-				await AuthService.signUp({
-					userName,
-					email,
-					phoneNumber,
-					password,
-					fingerprint
-				});
-			res.cookie('refreshToken', refreshToken, COOKIE_SETTINGS.REFRESH_TOKEN);
+			await AuthService.signUp({
+				userName,
+				email,
+				phoneNumber,
+				password,
+				fingerprint
+			});
 
-			return res
-				.status(200)
-				.json({ userDto, accesToken, accesTokenExpiration });
+			return res.status(200).json({ message: 'регистрация прошла успешно' });
 		} catch (err) {
 			// return ErrorsUtils.catchError(res, err)
 			next(err);
 		}
 	}
+	// static async signUp(req, res, next) {
+	// 	const { userName, email, phoneNumber, password } = req.body;
+	// 	const { fingerprint } = req;
 
+	// 	try {
+	// 		const { accesToken, refreshToken, userDto, accesTokenExpiration } =
+	// 			await AuthService.signUp({
+	// 				userName,
+	// 				email,
+	// 				phoneNumber,
+	// 				password,
+	// 				fingerprint
+	// 			});
+	// 		res.cookie('refreshToken', refreshToken, COOKIE_SETTINGS.REFRESH_TOKEN);
+
+	// 		return res
+	// 			.status(200)
+	// 			.json({ userDto, accesToken, accesTokenExpiration });
+	// 	} catch (err) {
+	// 		// return ErrorsUtils.catchError(res, err)
+	// 		next(err);
+	// 	}
+	// }
 	static async logOut(req, res, next) {
 		let refreshToken = req.cookies.refreshToken;
 		try {
@@ -82,17 +100,25 @@ class AuthController {
 			next(err);
 		}
 	}
-	static async protectedQuery(req, res, nex) {
-		const items =
-			await prisma.$queryRaw`SELECT * FROM "Screenings" WHERE "screeningStart"::Text LIKE '2023-09-22%'`;
+	static async activate(req, res, next) {
+		try {
+			const activationLink = req.params.link;
 
-		return res.status(200).json(items);
+			await AuthService.activate(activationLink);
+			return res.redirect(`${process.env.CLIENT_URL}/SuccesResult`);
+		} catch (e) {
+			return res.redirect(`${process.env.CLIENT_URL}/ErrorResult`);
+		}
 	}
 
 	static async updateUserData(req, res, next) {
 		const { fingerprint } = req;
 
 		const userData = req.body.newUserData;
+		if (!userData.password) {
+			delete userData.password;
+		}
+		console.log(userData);
 		const userId = Number(req.params.id);
 		let currentRefreshToken = req.cookies.refreshToken;
 

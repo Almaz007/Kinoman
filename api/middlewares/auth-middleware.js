@@ -1,22 +1,22 @@
-import { WebError, Unauthorized, Forbidden } from '../utils/Errors.js'
-import TokenService from '../services/Token.js'
+import { WebError, Unauthorized, Forbidden } from '../utils/Errors.js';
+import TokenService from '../services/Token.js';
 
 export default function authMiddleware(req, res, next) {
 	try {
-		const authHeader = req.headers.authorization
-		const accessToken = authHeader?.split(' ')?.[1]
+		const authHeader = req.headers.authorization;
+		const accessToken = authHeader?.split(' ')?.[1];
 
 		if (!accessToken) {
-			return next(new Unauthorized('Вы не авторизованы'))
+			return next(new Unauthorized('Вы не авторизованы'));
 		}
-		const userData = TokenService.verifyAccesToken(accessToken)
+		const userData = TokenService.verifyAccesToken(accessToken);
 		if (!userData) {
-			return next(new Forbidden('Вы не авторизованы'))
+			return next(new Forbidden('Вы не авторизованы'));
 		}
 
-		req.user = userData
-		next()
+		req.user = userData;
+		next();
 	} catch (err) {
-		return next(err)
+		return next(err);
 	}
 }

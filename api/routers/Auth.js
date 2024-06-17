@@ -8,8 +8,8 @@ const router = Router();
 router.post('/sign-in', AuthValidator.signIn, AuthController.signIn);
 router.post('/sign-up', AuthValidator.signUp, AuthController.signUp);
 router.post('/logout', AuthValidator.logOut, AuthController.logOut);
+router.get('/activate/:link', AuthController.activate);
 router.post('/refresh', AuthValidator.refresh, AuthController.refresh);
-router.post('/protected', AuthMiddleware, AuthController.protectedQuery);
 router.patch(
 	'/updateUserData/:id',
 	AuthMiddleware,
