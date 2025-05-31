@@ -1,0 +1,87 @@
+.bookings__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+.booking__card {
+	width: 360px;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.booking__row {
+	display: flex;
+	column-gap: 15px;
+	margin-bottom: 10px;
+}
+.image {
+	height: 190px;
+}
+.image img {
+	width: 140px;
+	height: 100%;
+	max-width: none;
+	border-radius: 5px;
+}
+.movie__title {
+	font-weight: 600;
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+.genres {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 20px;
+}
+.genre {
+	border-radius: 4px;
+	padding: 8px 10px;
+
+	font-size: 13px;
+	letter-spacing: 0.02em;
+	color: #000;
+
+	background-color: #f6f6f6;
+}
+
+.success,
+.canceled {
+	padding: 8px 15px;
+	width: fit-content;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+.success {
+	background-color: #e0ffe3;
+	color: #1bc200;
+}
+
+.canceled {
+	background-color: #fc9e9e;
+	color: #ff0707;
+}
+.time {
+	font-weight: 600;
+}
+.times .time__block:first-child {
+	margin-bottom: 5px;
+}
+
+.btn__cancle {
+	margin-top: 15px;
+	padding: 10px;
+	background-color: #fc9e9e;
+	font-weight: 500;
+	border-radius: 5px;
+	transition: var(--tran-03);
+}
+.btn__cancle:hover {
+	background-color: #f97777;
+}
+.disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+	pointer-events: none;
+}

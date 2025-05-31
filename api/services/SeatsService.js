@@ -16,7 +16,13 @@ export default class SeatsService {
 			await ReservedSeatsService.getReservedSeatsByScreeningId(screeningId);
 
 		seats.forEach(seat => {
-			if (reservedSeats.find(reservedSeat => reservedSeat.seatId == seat.id)) {
+			if (
+				reservedSeats.find(
+					reservedSeat =>
+						reservedSeat.seatId == seat.id &&
+						reservedSeat.booking.status === 'success'
+				)
+			) {
 				seat['reserved'] = true;
 			}
 		});

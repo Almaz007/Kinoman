@@ -91,7 +91,7 @@ model ReservedSeat {
   screening   Screening @relation(fields: [screeningId], references: [id])
   booking     Booking   @relation(fields: [bookingId], references: [id])
 
-  @@unique([seatId, screeningId])
+  // @@unique([seatId, screeningId])
   @@map("ReservedSeats")
 }
 
@@ -120,6 +120,8 @@ model Booking {
   timePurchase       DateTime
   amountSeat         Int
   cost               Decimal
+  paymentId          String
+  status             String
   reservedSeats      ReservedSeat[]
   screening          Screening         @relation(fields: [screeningId], references: [id])
   user               User?             @relation(fields: [userId], references: [id])

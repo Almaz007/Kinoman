@@ -1,12 +1,12 @@
-import styles from './auditorium.module.css'
-import { screeningBookingState } from '../../../store/store'
-import SeatsList from './SeatsList/SeatsList'
+import styles from './auditorium.module.css';
+import { screeningBookingState } from '../../../store/store';
+import SeatsList from './SeatsList/SeatsList';
 const Auditorium = () => {
 	const [stage, auditoriumId, cost] = screeningBookingState(state => [
 		state.stage,
 		state.screeningBooking.auditoriumId,
-		state.screeningBooking.cost,
-	])
+		state.screeningBooking.cost
+	]);
 
 	return (
 		<div
@@ -38,7 +38,7 @@ const Auditorium = () => {
 				<div className={styles.clarification}>Цена указана за один билет</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Auditorium
+export default Auditorium;

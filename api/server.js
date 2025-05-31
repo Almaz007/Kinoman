@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import Fingerprint from 'express-fingerprint';
 import AuthRootRouter from './routers/Auth.js';
 import ScreeningsRouter from './routers/ScreeningsRouter.js';
+import BookingsRouter from './routers/BookingsRouter.js';
 import MoviesRouter from './routers/MoivesRouter.js';
 import cookieParser from 'cookie-parser';
 import errorMiddleware from './middlewares/error-middleware.js';
@@ -30,6 +31,7 @@ app.use('/api/uploads/ProfileImages', express.static('uploads/profileImages'));
 
 app.use('/api/auth', AuthRootRouter);
 app.use('/api/screenings', ScreeningsRouter);
+app.use('/api/bookings', BookingsRouter);
 app.use('/api/movies', MoviesRouter);
 app.use('/api/seats', SeatsRouter);
 app.use('/api/payments', PaymentRouter);

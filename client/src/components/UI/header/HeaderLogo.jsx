@@ -1,13 +1,12 @@
-import styles from './Header.module.css'
-export default function HeaderLogo() {
+export default function HeaderLogo({ className }) {
 	return (
 		<svg
+			className={className}
 			width='150'
 			height='45'
-			viewBox='0 0 150 45'
+			viewBox='0 0 150 40'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'
-			className={styles['headerLogo']}
 		>
 			<path
 				d='M13.89 33L6.27 23.67V33H2.07V12.06H6.27V21.45L13.89 12.06H18.96L10.32 22.44L19.2 33H13.89ZM26.1626 12.06V33H21.9626V12.06H26.1626ZM48.2222 33H44.0222L34.5122 18.63V33H30.3122V12.03H34.5122L44.0222 26.43V12.03H48.2222V33ZM103.796 12.06V33H99.5965V19.38L93.9865 33H90.8065L85.1665 19.38V33H80.9665V12.06H85.7365L92.3965 27.63L99.0565 12.06H103.796ZM120.789 29.01H112.449L111.069 33H106.659L114.189 12.03H119.079L126.609 33H122.169L120.789 29.01ZM119.649 25.65L116.619 16.89L113.589 25.65H119.649ZM147.334 33H143.134L133.624 18.63V33H129.424V12.03H133.624L143.134 26.43V12.03H147.334V33Z'
@@ -18,5 +17,5 @@ export default function HeaderLogo() {
 				fill='currentColor'
 			/>
 		</svg>
-	)
+	);
 }

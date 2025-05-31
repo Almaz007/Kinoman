@@ -12,7 +12,7 @@ import MovieAddEdit from '../pages/AdminPages/Movies/MovieAddEdit/MovieAddEdit';
 import UserProfile from '../pages/authUserPages/UserProfile/UserProfile';
 import Help from '../pages/authUserPages/Help/Help';
 import News from '../pages/PublicPages/News/News';
-import Orders from '../pages/authUserPages/Orders/Orders';
+import UserBookings from '../pages/authUserPages/UserBookings/UserBookings';
 
 export const publicRoutes = [
 	{
@@ -26,10 +26,6 @@ export const publicRoutes = [
 	{
 		path: 'News',
 		element: <News />
-	},
-	{
-		path: 'NewsPadge',
-		element: <Poster />
 	},
 	{
 		path: 'MovieSinglePage/:id',
@@ -82,8 +78,8 @@ export const authUserRoutes = [
 		element: <UserProfile />
 	},
 	{
-		path: 'orders',
-		element: <Orders />
+		path: 'userBookings',
+		element: <UserBookings />
 	},
 	{
 		path: 'help',

@@ -7,7 +7,6 @@ const SuccesResult = () => {
 	Swal.fire({
 		title: 'Аккаунт успешно подтвержден',
 		icon: 'success',
-		text: 'Подтвердите аккаунт, перейдя по ссылке, отправленной на почту!',
 		confirmButtonText: 'Перейти на сайт'
 	}).then(res => {
 		navigate('/');

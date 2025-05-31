@@ -14,7 +14,7 @@ export const authUserLinks = [
 	},
 	{
 		id: 3,
-		path: 'orders',
+		path: 'userBookings',
 		text: 'Заказы',
 		icon: faShop
 	},

@@ -5,6 +5,9 @@
 
 	padding: 17px 0px;
 }
+.logo {
+	color: var(--primary-color);
+}
 .header__info {
 	display: flex;
 	column-gap: 30px;

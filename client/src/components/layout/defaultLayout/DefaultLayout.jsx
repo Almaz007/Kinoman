@@ -5,7 +5,7 @@ import Footer from '../../UI/footer/Footer';
 
 export default function DefaultLayout() {
 	return (
-		<>
+		<div className={styles['layout']}>
 			<Header />
 			<main className={styles['main']}>
 				<div className='container'>
@@ -13,6 +13,6 @@ export default function DefaultLayout() {
 				</div>
 			</main>
 			<Footer />
-		</>
+		</div>
 	);
 }

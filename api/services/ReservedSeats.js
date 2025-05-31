@@ -1,27 +1,34 @@
-import prisma from '../db/db.config.js'
+import prisma from '../db/db.config.js';
 
 export default class ReservedSeatsService {
 	static async getReservedSeatsByScreeningId(screeningId) {
 		let seats = await prisma.reservedSeat.findMany({
 			where: {
-				screeningId: screeningId,
+				screeningId: screeningId
 			},
-		})
+			include: {
+				booking: {
+					select: {
+						status: true
+					}
+				}
+			}
+		});
 
-		return seats
+		return seats;
 	}
 
 	static async createReservedSeats(selectedSeats, screeningId, bookingId) {
 		let reserveadSeats = selectedSeats.map(seat => ({
 			seatId: seat.id,
 			screeningId,
-			bookingId,
-		}))
+			bookingId
+		}));
 
 		const newReservedSeats = await prisma.reservedSeat.createMany({
-			data: reserveadSeats,
-		})
+			data: reserveadSeats
+		});
 
-		return newReservedSeats
+		return newReservedSeats;
 	}
 }

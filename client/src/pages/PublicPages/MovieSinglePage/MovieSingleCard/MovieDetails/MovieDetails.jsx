@@ -1,14 +1,14 @@
-import styles from './movieDetails.module.css'
-import { useContext } from 'react'
-import { ContextForSingleMovie } from '../../MovieSinglePage'
+import styles from './movieDetails.module.css';
+import { useContext } from 'react';
+import { ContextForSingleMovie } from '../../MovieSinglePage';
 import {
-	getDayMont,
-	getHourMinutesByTime,
-} from '../../../../../utils/getDayNumMonthByFullDate'
+	getDayMonth,
+	getHourMinutesByTime
+} from '../../../../../utils/getDayNumMonthByFullDate';
 
 export default function MovieDetails() {
-	const { movie } = useContext(ContextForSingleMovie)
-	const { title, country, releaseDate, duration } = movie
+	const { movie } = useContext(ContextForSingleMovie);
+	const { title, country, releaseDate, duration } = movie;
 
 	return (
 		<div className={styles['movie__details']}>
@@ -20,7 +20,7 @@ export default function MovieDetails() {
 				</div>
 				<div className={styles['date__time']}>
 					<div className={styles['date__time__item']}>
-						c {getDayMont(releaseDate)}
+						c {getDayMonth(releaseDate)}
 					</div>
 					<div className={styles['date__time__item']}>
 						{getHourMinutesByTime(duration)}
@@ -28,5 +28,5 @@ export default function MovieDetails() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

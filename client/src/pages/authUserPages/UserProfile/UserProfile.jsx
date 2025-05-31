@@ -7,9 +7,6 @@ import useProfileData from '../../../hooks/useProfileData';
 import { Input } from '../../../components/UI/Input/Input';
 import PasswordInput from '../../../components/UI/PasswordInput/PasswordInput';
 import MyButton from '../../../components/UI/button/MyButton';
-import { useState } from 'react';
-import MyModal from '../../../components/UI/MyModal/MyModal';
-import { Alert } from '@mui/material';
 
 const UserProfile = () => {
 	const {

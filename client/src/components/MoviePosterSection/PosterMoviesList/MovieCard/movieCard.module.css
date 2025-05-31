@@ -1,7 +1,8 @@
-.moview__card {
+.movie__card {
 	display: flex;
 	align-items: center;
 	column-gap: 20px;
+	width: 550px;
 }
 .movie__img {
 	position: relative;

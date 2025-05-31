@@ -86,11 +86,11 @@ export const PosterMoviesState = create(set => ({
 
 	generateDateList: () => {
 		return [
-			'2024-05-22',
-			'2024-05-23',
-			'2024-05-24',
-			'2024-05-25',
-			'2024-05-26'
+			'2024-06-19',
+			'2024-06-20',
+			'2024-06-21',
+			'2024-06-22',
+			'2024-06-23'
 		];
 	},
 	selectedDate: '',
@@ -171,11 +171,6 @@ export const screeningBookingState = create((set, get) => ({
 	updateСhequeSendInfo: (email, phoneNumber) => {
 		set({ chequeSendInfo: { email, phoneNumber } });
 	},
-	getСhequeSendInfo: () => {
-		const { chequeSendInfo } = get();
-		const { email, phoneNumber } = chequeSendInfo;
-		return { defaultEmail: email, defaultPhoneNumber: phoneNumber };
-	},
 
 	stage: 0,
 
@@ -205,7 +200,7 @@ export const screeningBookingState = create((set, get) => ({
 	},
 	createScreeningBooking: (movie, screeningData) => {
 		const { screeningBooking } = get();
-		if (screeningBooking.id === screeningData.id) return;
+		// if (screeningBooking.id === screeningData.id) return;
 
 		const { resetState } = get();
 		resetState();
@@ -252,7 +247,7 @@ export const screeningBookingState = create((set, get) => ({
 		}
 	},
 	payment: async (userId, isAuth) => {
-		const { screeningBooking, selectedSeats, checkSendInfo } = get();
+		const { screeningBooking, selectedSeats, chequeSendInfo } = get();
 		set({ isLoading: true });
 		try {
 			let dateToday = new Date();
@@ -268,7 +263,7 @@ export const screeningBookingState = create((set, get) => ({
 			const response = await PaymentService.makePayment(
 				isAuth,
 				bookingObj,
-				checkSendInfo,
+				chequeSendInfo,
 				selectedSeats,
 				screeningBooking
 			);
@@ -474,6 +469,52 @@ export const ProfileState = create((set, get) => ({
 			return userDto;
 		} catch (err) {
 			const message = err.response.data?.error || err.message;
+			Swal.showValidationMessage(`Ошибка: ${message}`);
+		}
+	}
+}));
+
+export const useUserBookingsState = create((set, get) => ({
+	bookingsData: [],
+	isErrorMessage: '',
+	isLoadingData: false,
+
+	fetchBookings: async (email, id) => {
+		try {
+			set({ isLoadingData: true });
+			const resp = await $api.get(`/bookings/getBookings/${email}/${id}`);
+			console.log(resp.data);
+			set({ bookingsData: resp.data });
+		} catch (err) {
+			console.log(err);
+		} finally {
+			set({ isLoadingData: false });
+		}
+	},
+
+	cancleBooking: async (bookingId, Swal) => {
+		const { bookingsData } = get();
+		try {
+			const resp = await $api.post(`/payments/canclePayment`, { bookingId });
+			if (resp.status !== 200) {
+				return Swal.showValidationMessage(`${resp.message}`);
+			}
+
+			const canceledBooking = resp.data;
+
+			let newBookingsData = bookingsData.filter(
+				booking => booking.id !== canceledBooking.id
+			);
+
+			const booking = bookingsData.find(
+				booking => booking.id === canceledBooking.id
+			);
+			booking['status'] = 'canceled';
+			newBookingsData.push(booking);
+
+			set({ bookingsData: newBookingsData });
+		} catch (err) {
+			const message = err.response?.data?.error || err.message;
 			Swal.showValidationMessage(`Ошибка: ${message}`);
 		}
 	}

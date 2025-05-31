@@ -1,20 +1,20 @@
-import { useState, createContext, useContext } from 'react'
+import { useState, createContext, useContext } from 'react';
 
-import Navigation from './navigation/Navigation'
-import MyButton from '../button/MyButton'
-import MyModal from '../MyModal/MyModal'
-import RegistrationLoginForm from '../../RegistrationLoginForm/RegistrationLoginForm'
-import { authState } from '../../../store/store'
-import DropDownProfile from '../../DropDownProfile/DropDownProfile'
-import styles from './Header.module.css'
-import HeaderLogo from './HeaderLogo'
+import Navigation from './navigation/Navigation';
+import MyButton from '../button/MyButton';
+import MyModal from '../MyModal/MyModal';
+import RegistrationLoginForm from '../../RegistrationLoginForm/RegistrationLoginForm';
+import { authState } from '../../../store/store';
+import DropDownProfile from '../../DropDownProfile/DropDownProfile';
+import styles from './Header.module.css';
+import HeaderLogo from './HeaderLogo';
 
-export const ContextForHeader = createContext()
+export const ContextForHeader = createContext();
 
 const Header = () => {
-	const [showModal, setShowModal] = useState(false)
-	const [showNav, setShowNav] = useState(false)
-	const isAuth = authState(state => state.isAuth)
+	const [showModal, setShowModal] = useState(false);
+	const [showNav, setShowNav] = useState(false);
+	const isAuth = authState(state => state.isAuth);
 
 	return (
 		<ContextForHeader.Provider value={{ setShowModal, showNav, setShowNav }}>
@@ -23,7 +23,7 @@ const Header = () => {
 					<div className={styles.header__block}>
 						<div className={styles.header__logo}>
 							{/* <Link to='/'>logo</Link> */}
-							<HeaderLogo />
+							<HeaderLogo className={styles['logo']} />
 						</div>
 
 						<div className={styles.header__action}>
@@ -42,7 +42,7 @@ const Header = () => {
 				</MyModal>
 			</header>
 		</ContextForHeader.Provider>
-	)
-}
+	);
+};
 
-export default Header
+export default Header;

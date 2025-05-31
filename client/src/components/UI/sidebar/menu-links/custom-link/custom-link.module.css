@@ -14,6 +14,7 @@
 	left: calc(100% + 18px);
 	z-index: 3;
 	background: #fff;
+	color: var(--text-color);
 	box-shadow: 0 5px 10px #0030e24d;
 	padding: 6px 12px;
 	border-radius: 4px;

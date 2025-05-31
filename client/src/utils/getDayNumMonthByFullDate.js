@@ -10,14 +10,14 @@ const months = {
 	9: 'Сентября',
 	10: 'Октября',
 	11: 'Ноября',
-	12: 'Декабря',
-}
+	12: 'Декабря'
+};
 
-export function getDayMont(date) {
-	return date.split('-')[2].slice(0, 2) + ' ' + months[+date.split('-')[1]]
+export function getDayMonth(date) {
+	return date.split('-')[2].slice(0, 2) + ' ' + months[+date.split('-')[1]];
 }
 export function getHourMinutesByTime(time) {
 	return `${Math.trunc(time / 60) && Math.trunc(time / 60) + ' ч'}  ${
 		time % 60
-	} м`
+	} м`;
 }

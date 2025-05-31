@@ -23,7 +23,18 @@ export default class ScreeningsService {
 			if (!moviesData.has(screening.movieId)) {
 				moviesData.set(screening.movieId, {
 					...(await prisma.movie.findFirst({
-						where: { id: screening.movieId }
+						where: { id: screening.movieId },
+						include: {
+							genres: {
+								select: {
+									genre: {
+										select: {
+											name: true
+										}
+									}
+								}
+							}
+						}
 					})),
 					screenings: []
 				});
@@ -48,12 +59,9 @@ export default class ScreeningsService {
 		// const currentDate = moment(new Date()).tz('Europe/Moscow')
 		// const startDate = currentDate.format('YYYY-MM-DD HH:mm:ss Z')
 		// const dateEnd = moment(currentDate).add(5, 'day').format('YYYY-MM-DD')
-		const currentDate = moment('2024-05-22').tz('Europe/Moscow');
+		const currentDate = moment('2024-06-19').tz('Europe/Moscow');
 		const startDate = currentDate.format('YYYY-MM-DD HH:mm:ss Z');
 		const dateEnd = moment(currentDate).add(5, 'day').format('YYYY-MM-DD');
-
-		console.log(startDate);
-		console.log(dateEnd);
 
 		const screenings = await prisma.$queryRaw`
 		 SELECT *
